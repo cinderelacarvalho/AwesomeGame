@@ -7,8 +7,6 @@ public class ServerHelper implements Runnable {
 
     private Socket clientSocket;
     private Server server;
-    private DataOutputStream dataOutputStream;
-    private DataInputStream dataInputStream;
 
 
     public ServerHelper(Socket clientSocket, Server server) {
@@ -21,23 +19,36 @@ public class ServerHelper implements Runnable {
     @Override
     public void run() {
 
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    clientSocket.getInputStream()));
+        while (true) {
 
-            String msg = in.readLine();
+            try {
+                BufferedReader fromPlayer = new BufferedReader(new InputStreamReader(
+                        clientSocket.getInputStream()));
+
+                String msg = fromPlayer.readLine();
 
 
-            System.out.println(msg);
+                System.out.println(msg);
 
-            server.sendMsg(msg);
+                server.receivedMsg(msg);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
 
     }
 
-    // dataOutputStream=new DataOutputStream(clientSocket.getOutputStream());
+
+    public void sendMsg(String msg) {
+
+
+        try {
+            PrintWriter toClient = new PrintWriter(clientSocket.getOutputStream(), true);
+
+            toClient.println(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

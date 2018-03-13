@@ -1,4 +1,4 @@
-package org.academiadecodigo.haltistas.AwesomeGame.server;
+package org.academiadecodigo.haltistas.AwesomeGame.player;
 
 public enum Directions {
 

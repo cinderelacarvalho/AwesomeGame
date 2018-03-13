@@ -17,11 +17,11 @@ public class Server {
     private Game game;
 
 
-    Server(int portNumber){
-        this.portNumber= portNumber;
+    Server(int portNumber) {
+        this.portNumber = portNumber;
 
         try {
-            serverSocket= new ServerSocket(portNumber);
+            serverSocket = new ServerSocket(portNumber);
             executorService = Executors.newCachedThreadPool();
             serverHelpers = new ArrayList<ServerHelper>();
         } catch (IOException e) {
@@ -30,29 +30,32 @@ public class Server {
 
     }
 
-    public void init(){
+    public void init() {
 
-        Game game= new Game();
+        Game game = new Game();
         //game.start();
 
         start();
 
     }
 
-    public void start () {
+    public void start() {
 
-      //  ExecutorService cachedPool = Executors.newCachedThreadPool();  // Or other type of thread
+        //  ExecutorService cachedPool = Executors.newCachedThreadPool();  // Or other type of thread
 
 
-        while (true){
+        while (true) {
 
             try {
+                System.out.println("Waiting for connection");
                 clientSocket = serverSocket.accept();
 
-                if(clientSocket.isConnected()){
-                    ServerHelper helper = new ServerHelper(clientSocket,this);
+                if (clientSocket.isConnected()) {
+                    ServerHelper helper = new ServerHelper(clientSocket, this);
                     executorService.submit(helper);
                     serverHelpers.add(helper);
+
+                    System.out.println("connected player " + (serverHelpers.indexOf(helper)+1));
                 }
 
             } catch (IOException e) {
@@ -63,15 +66,22 @@ public class Server {
 
     }
 
-    public void sendMsg(String msg){
+    //invoked by utilitarian class
+    public void broadcast(String msg) {
+        synchronized (serverHelpers) {
+            for (ServerHelper h : serverHelpers) {
+
+                h.sendMsg(msg);
+
+            }
+        }
+    }
+
+    public void receivedMsg(String msg) {
 
         game.receiveMsg(msg);
 
     }
-
-
-    // Broadcast()
-
 
 
 }

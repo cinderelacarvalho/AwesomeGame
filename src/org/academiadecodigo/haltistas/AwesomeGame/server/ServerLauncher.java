@@ -6,6 +6,11 @@ public class ServerLauncher {
 
         //create new server // server.init
 
+        Server server= new Server(8765);
+
+        server.init();
+
+
         System.out.println("Beginning of AwesomeGame journey.");
     }
 }

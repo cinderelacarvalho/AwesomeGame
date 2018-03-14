@@ -2,6 +2,7 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class ServerHelper implements Runnable {
 
@@ -41,7 +42,6 @@ public class ServerHelper implements Runnable {
 
 
     public void sendMsg(String msg) {
-
 
         try {
             PrintWriter toClient = new PrintWriter(clientSocket.getOutputStream(), true);

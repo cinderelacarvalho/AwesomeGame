@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Player implements Runnable {
+public class PlayerNetwork implements Runnable {
 
     private int portNumber;
     private String hostName;
@@ -12,15 +12,18 @@ public class Player implements Runnable {
     private PrintWriter toServer;
     private BufferedReader fromServer;
     private Scanner scanner;
+    private Decoder decoder;
 
-    Player(String hostName, int portNumber) throws IOException {
+    PlayerNetwork(String hostName, int portNumber) throws IOException {
         this.hostName = hostName;
         this.portNumber = portNumber;
 
         scanner = new Scanner(System.in);
         playerSocket = new Socket(hostName, portNumber);
-        toServer = new PrintWriter(playerSocket.getOutputStream(),true);
+        toServer = new PrintWriter(playerSocket.getOutputStream(), true);
         fromServer = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
+        PlayerCanvas playerCanvas = new PlayerCanvas();
+        decoder = new Decoder(playerCanvas);
     }
 
 
@@ -30,7 +33,9 @@ public class Player implements Runnable {
 
             //implemented scanner for testing
 
-            String msg = scanner.nextLine();
+            //String msg = scanner.nextLine();
+
+            String msg = "direita";
 
             toServer.println(msg);
         }
@@ -47,11 +52,13 @@ public class Player implements Runnable {
             try {
                 String msgFromServer = fromServer.readLine();
 
-                System.out.println(msgFromServer);
+                decoder.decoding(msgFromServer);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
     }
+
 }
+

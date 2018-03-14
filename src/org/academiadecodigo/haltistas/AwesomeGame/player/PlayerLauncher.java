@@ -6,17 +6,17 @@ public class PlayerLauncher {
 
     public static void main(String[] args) {
 
-        Player player = null;
+        PlayerNetwork playerNetwork = null;
         try {
-            player = new Player("127.0.0.1", 8765);
+            playerNetwork = new PlayerNetwork("127.0.0.1", 8765);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Thread thread= new Thread(player);
+        Thread thread= new Thread(playerNetwork);
         thread.start();
 
-        player.sendMsg();
+        playerNetwork.sendMsg();
 
     }
 }

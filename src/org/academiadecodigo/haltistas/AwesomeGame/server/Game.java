@@ -10,5 +10,7 @@ public class Game {
 
     public void receiveMsg(String msg){
 
+        System.out.println(msg);
+
     }
 }

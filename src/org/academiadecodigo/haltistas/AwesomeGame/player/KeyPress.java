@@ -1,6 +1,6 @@
 package org.academiadecodigo.haltistas.AwesomeGame.player;
 
-public enum Directions {
+public enum KeyPress {
 
     UP,
     DOWN,

@@ -27,15 +27,9 @@ public class PlayerNetwork implements Runnable {
     }
 
 
-    public void sendMsg() {
+    public void sendMsg(String msg) {
 
         while (true) {
-
-            //implemented scanner for testing
-
-            //String msg = scanner.nextLine();
-
-            String msg = "direita";
 
             toServer.println(msg);
         }

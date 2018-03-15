@@ -12,7 +12,6 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private int portNumber;
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private ExecutorService executorService;
@@ -20,13 +19,12 @@ public class Server {
     private Game game;
 
 
-    Server(int portNumber) {
-        this.portNumber = portNumber;
+    public Server(int portNumber) {
 
         try {
             serverSocket = new ServerSocket(portNumber);
             executorService = Executors.newCachedThreadPool();
-            serverHelpers = new ArrayList<ServerHelper>();
+            serverHelpers = new ArrayList<>();
             game = new Game();
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,13 +49,11 @@ public class Server {
                 System.out.println("Waiting for connection");
                 clientSocket = serverSocket.accept();
 
-                if (clientSocket.isConnected()) {
-                    ServerHelper helper = new ServerHelper(clientSocket, this);
-                    executorService.submit(helper);
-                    serverHelpers.add(helper);
+                ServerHelper helper = new ServerHelper(clientSocket, this);
+                executorService.submit(helper);
+                serverHelpers.add(helper);
 
-                    System.out.println("connected player " + (serverHelpers.indexOf(helper) + 1));
-                }
+                System.out.println("connected player " + (serverHelpers.indexOf(helper) + 1));
 
             } catch (IOException e) {
                 e.printStackTrace();

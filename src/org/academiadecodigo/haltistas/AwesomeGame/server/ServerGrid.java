@@ -1,4 +1,4 @@
 package org.academiadecodigo.haltistas.AwesomeGame.server;
 
-public class Position {
+public class ServerGrid {
 }

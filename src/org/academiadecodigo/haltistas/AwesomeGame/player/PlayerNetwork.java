@@ -4,22 +4,17 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class PlayerNetwork implements Runnable {
+public class PlayerNetwork {
 
-    private int portNumber;
-    private String hostName;
     private Socket playerSocket;
     private PrintWriter toServer;
     private BufferedReader fromServer;
-    private Scanner scanner;
     private Decoder decoder;
 
     PlayerNetwork(String hostName, int portNumber) throws IOException {
-        this.hostName = hostName;
-        this.portNumber = portNumber;
-
-        scanner = new Scanner(System.in);
         playerSocket = new Socket(hostName, portNumber);
+
+        // TODO: 15/03/18 init
         toServer = new PrintWriter(playerSocket.getOutputStream(), true);
         fromServer = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
         PlayerCanvas playerCanvas = new PlayerCanvas();
@@ -37,8 +32,6 @@ public class PlayerNetwork implements Runnable {
 
 
     // this method as 1 thread
-
-    @Override
     public void run() {
 
         while (playerSocket.isConnected()) {

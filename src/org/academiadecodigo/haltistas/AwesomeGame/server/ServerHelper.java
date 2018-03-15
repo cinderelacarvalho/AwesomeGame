@@ -21,7 +21,7 @@ public class ServerHelper implements Runnable {
     @Override
     public void run() {
 
-        while (true) {
+        while (!clientSocket.isClosed()) {
 
             try {
 

@@ -2,18 +2,19 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ServerHelper implements Runnable {
 
     private Socket clientSocket;
     private Server server;
+    private BufferedReader fromPlayer;
 
 
-    public ServerHelper(Socket clientSocket, Server server) {
+    ServerHelper(Socket clientSocket, Server server) throws IOException {
         this.clientSocket = clientSocket;
         this.server = server;
-
+        fromPlayer = new BufferedReader(new InputStreamReader(
+                clientSocket.getInputStream()));
     }
 
 
@@ -23,15 +24,11 @@ public class ServerHelper implements Runnable {
         while (true) {
 
             try {
-                BufferedReader fromPlayer = new BufferedReader(new InputStreamReader(
-                        clientSocket.getInputStream()));
 
                 String msg = fromPlayer.readLine();
 
-
-                System.out.println(msg);
-
                 server.receivedMsg(msg);
+
 
             } catch (IOException e) {
                 e.printStackTrace();

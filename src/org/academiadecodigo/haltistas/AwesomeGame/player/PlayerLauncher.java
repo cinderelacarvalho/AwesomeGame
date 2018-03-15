@@ -1,6 +1,8 @@
 package org.academiadecodigo.haltistas.AwesomeGame.player;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class PlayerLauncher {
 
@@ -12,11 +14,13 @@ public class PlayerLauncher {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        executorService.submit(playerNetwork);
 
-        Thread thread= new Thread(playerNetwork);
-        thread.start();
+       // Thread thread= new Thread(playerNetwork);
+       // thread.start();
 
-        playerNetwork.sendMsg();
+
 
     }
 }

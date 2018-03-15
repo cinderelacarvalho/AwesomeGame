@@ -24,15 +24,15 @@ public class PlayerNetwork implements Runnable {
         fromServer = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
         PlayerCanvas playerCanvas = new PlayerCanvas();
         decoder = new Decoder(playerCanvas);
+        KeyHandler k = new KeyHandler(this);
+
+
     }
 
 
     public void sendMsg(String msg) {
 
-        while (true) {
-
             toServer.println(msg);
-        }
     }
 
 

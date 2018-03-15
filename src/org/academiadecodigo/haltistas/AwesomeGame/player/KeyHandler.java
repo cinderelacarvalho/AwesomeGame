@@ -43,18 +43,22 @@ public class KeyHandler implements KeyboardHandler {
         switch (keyboardEvent.getKey()) {
 
             case KeyboardEvent.KEY_UP:
+                System.out.println("UP");
                 player.sendMsg("UP");
                 break;
 
             case KeyboardEvent.KEY_DOWN:
+                System.out.println("down");
                 player.sendMsg("DOWN");
                 break;
 
             case KeyboardEvent.KEY_LEFT:
+                System.out.println("left");
                 player.sendMsg("LEFT");
                 break;
 
             case KeyboardEvent.KEY_RIGHT:
+                System.out.println("right");
                 player.sendMsg("RIGHT");
                 break;
         }

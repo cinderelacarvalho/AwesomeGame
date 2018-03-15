@@ -9,7 +9,7 @@ public class PlayerLauncher {
         PlayerNetwork playerNetwork = null;
         try {
             playerNetwork = new PlayerNetwork("127.0.0.1", 8765);
-            playerNetwork.run();
+            playerNetwork.init();
 
         } catch (IOException e) {
             e.printStackTrace();

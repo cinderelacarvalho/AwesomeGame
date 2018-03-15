@@ -14,11 +14,14 @@ public class PlayerNetwork {
     PlayerNetwork(String hostName, int portNumber) throws IOException {
         playerSocket = new Socket(hostName, portNumber);
 
-        // TODO: 15/03/18 init
+    }
+
+    public void init() throws IOException {
         toServer = new PrintWriter(playerSocket.getOutputStream(), true);
         fromServer = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
-        PlayerCanvas playerCanvas = new PlayerCanvas();
-        decoder = new Decoder(playerCanvas);
+        PlayerGrid playerGrid = new PlayerGrid();
+        playerGrid.init();
+        decoder = new Decoder(playerGrid);
         KeyHandler k = new KeyHandler(this);
 
 

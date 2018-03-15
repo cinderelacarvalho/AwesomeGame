@@ -1,9 +1,6 @@
 package org.academiadecodigo.haltistas.AwesomeGame.server;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -16,7 +13,7 @@ public class Server {
     private Socket clientSocket;
     private ExecutorService executorService;
     private ArrayList<ServerHelper> serverHelpers;
-    private Game game;
+    private ServerGrid serverGrid;
 
 
     public Server(int portNumber) {
@@ -25,7 +22,7 @@ public class Server {
             serverSocket = new ServerSocket(portNumber);
             executorService = Executors.newCachedThreadPool();
             serverHelpers = new ArrayList<>();
-            game = new Game();
+            serverGrid = new ServerGrid();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,7 +73,8 @@ public class Server {
 
     public void receivedMsg(String msg) {
 
-        game.receiveMsg(msg);
+        serverGrid.receiveMsg(msg);
+
 
 
     }

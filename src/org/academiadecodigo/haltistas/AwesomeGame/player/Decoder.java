@@ -3,11 +3,11 @@ package org.academiadecodigo.haltistas.AwesomeGame.player;
 
 public class Decoder {
 
-    private PlayerCanvas playerCanvas;
+    private PlayerGrid playerGrid;
 
-    public Decoder (PlayerCanvas playerCanvas) {
+    public Decoder (PlayerGrid playerGrid) {
 
-        this.playerCanvas = playerCanvas;
+        this.playerGrid = playerGrid;
     }
 
 
@@ -21,7 +21,7 @@ public class Decoder {
 
 
         if (words [0].equals("start")) {
-             playerCanvas.start(x1, y1, x2, y2);
+             playerGrid.start(x1, y1, x2, y2);
         }
 
         if (words[0].equals("move")) {

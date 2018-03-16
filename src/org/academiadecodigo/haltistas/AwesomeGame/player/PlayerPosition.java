@@ -8,19 +8,25 @@ public class PlayerPosition {
     private int row;
     private int col;
     private final int CELLSIZE = 10;
+    private Rectangle rectangle;
+
 
     public PlayerPosition(int row, int col) {
-        this.col = col;
-        this.row = row;
-        drawPos();
+
+        rectangle = new Rectangle(row * CELLSIZE, col * CELLSIZE,
+                CELLSIZE, CELLSIZE);
+
     }
 
     public void drawPos() {
-        Rectangle rectangle = new Rectangle(row*CELLSIZE, col*CELLSIZE,
-                CELLSIZE,CELLSIZE);
-        rectangle.draw();
+
+        rectangle.fill();
+
     }
 
+    public void delete() {
+        rectangle.delete();
+    }
 
 
 

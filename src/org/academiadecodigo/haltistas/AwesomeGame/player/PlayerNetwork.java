@@ -34,7 +34,6 @@ public class PlayerNetwork {
     }
 
 
-    // this method as 1 thread
     public void run() {
 
         while (playerSocket.isConnected()) {

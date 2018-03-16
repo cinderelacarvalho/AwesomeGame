@@ -2,10 +2,14 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 
 public class ServerGrid {
 
+    private Grid grid;
 
 
+    public void init() {
 
-    // start ()
+        grid = new Grid();
+
+    }
 
 
     public void receiveMsg(String msg){
@@ -13,4 +17,6 @@ public class ServerGrid {
         System.out.println(msg);
 
     }
+
+
 }

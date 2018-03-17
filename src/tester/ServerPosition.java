@@ -20,4 +20,15 @@ public class ServerPosition {
         }
         return false;
     }
+
+    //cenas do lado do cliente
+
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
+    }
 }

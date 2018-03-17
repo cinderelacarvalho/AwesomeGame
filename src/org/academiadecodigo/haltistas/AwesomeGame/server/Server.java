@@ -31,6 +31,7 @@ public class Server {
 
     public void init() {
 
+        serverGrid.init();
         start();
 
     }

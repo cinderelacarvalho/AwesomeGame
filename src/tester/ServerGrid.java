@@ -9,7 +9,9 @@ public class ServerGrid {
 
         grid.init();
 
-        Snake snake = new Snake(new ServerPosition(5, 6));
+        Snake snake1 = new Snake(20,30,20,31,20,32) ;
+
+
 
     }
 }

@@ -15,15 +15,18 @@ public class ServerGrid {
 
 
 
-    //todo método que envia a mensagem de start para cada um dos players.
+    //Método que envia a mensagem de start para cada um dos players.
+    //TODO uma threadSleep? para esperar um pouco até começar?
     public void init() {
         server.broadcast("start");
+        start();
+
     }
 
-    //todo começa as movimentações. Enviar para os jogadores.
+    //TODO começa as movimentações. Enviar para os jogadores.
     public void start() {
 
-        //todo thread para a cada ciclo de while movimentar
+        //TODO thread para a cada ciclo de while movimentar
         server.broadcast("move");
 
 

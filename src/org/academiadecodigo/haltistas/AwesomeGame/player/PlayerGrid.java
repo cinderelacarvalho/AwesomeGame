@@ -32,8 +32,8 @@ public class PlayerGrid {
             initialHeight = 1;
             initialWidth += 1;
         }
-
         start();
+
 
     }
 
@@ -45,6 +45,16 @@ public class PlayerGrid {
         drawInitialSnake2(80, 30);
         drawInitialSnake2(80, 31);
         drawInitialSnake2(80, 32);
+        greenApple(44,7);
+        redApple(3,3);
+
+        try {
+            Thread.sleep(5000);
+            deleteWall();
+            snake.moveUpP1(2,2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -55,11 +65,19 @@ public class PlayerGrid {
     public void drawInitialSnake1(int rowP1, int colP1) {
         snake.initialSnakeP1(positions[rowP1][colP1]);
 
-
     }
 
     public void drawInitialSnake2(int rowP2, int colP2) {
         snake.initialSnakeP2(positions[rowP2][colP2]);
+    }
+
+    public void greenApple(int row, int col) {
+        positions[row][col].paintGreenApple();
+
+    }
+
+    public void redApple(int row, int col){
+        positions[row][col].paintRedApple();
     }
 
     public void fillWall() {

@@ -5,7 +5,7 @@ public class Decoder {
 
     private PlayerGrid playerGrid;
 
-    public Decoder (PlayerGrid playerGrid) {
+    public Decoder(PlayerGrid playerGrid) {
 
         this.playerGrid = playerGrid;
     }
@@ -15,23 +15,37 @@ public class Decoder {
 
         String[] words = msg.split("-");
         int x1 = Integer.parseInt(words[1]);
-        int y1 = Integer.parseInt(words[1]);
-        int x2 = Integer.parseInt(words[1]);
-        int y2 = Integer.parseInt(words[1]);
+        int y1 = Integer.parseInt(words[2]);
+        int x2 = Integer.parseInt(words[3]);
+        int y2 = Integer.parseInt(words[4]);
 
-/*
-        if (words [0].equals("start")) {
-             playerGrid.start(x1, y1, x2, y2);
+
+        if (words[0].equals("start")) {
+            playerGrid.start();
         }
 
-        if (words[0].equals("move")) {
+        if (words[0].equals("moveP1")) {
 
-        } */
+        }
+
+        if (words[0].equals("moveP2")) {
+
+        }
+
+        if (words[0].equals("deleteWall")) {
+            playerGrid.deleteWall();
+        }
+
+        if (words[0].equals("greenAp")) {
+            // playerGrid.greenApple();
+        }
+        if (words[0].equals("redA")) {
+            //  playerGrid.redApple();
+        }
+
+        if (words[0].equals("deletePos")) {
+            //playerGrid.delete();
+        }
     }
-
-
-
-
-
 }
 

@@ -1,12 +1,11 @@
 package org.academiadecodigo.haltistas.AwesomeGame.player;
 
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 
 public class PlayerPosition {
 
-    private int row;
-    private int col;
     private final int CELLSIZE = 10;
     private Rectangle rectangle;
 
@@ -19,7 +18,6 @@ public class PlayerPosition {
     }
 
     public void paintPos() {
-
         rectangle.fill();
 
     }
@@ -32,6 +30,18 @@ public class PlayerPosition {
         rectangle.draw();
     }
 
+    public void paintGreenApple(){
+        rectangle.setColor(Color.GREEN);
+        rectangle.fill();
+    }
 
+    public void paintRedApple(){
+        rectangle.setColor(Color.RED);
+        rectangle.fill();
+    }
+
+    public void move(int x, int y){
+        rectangle.translate(x,y);
+    }
 
 }

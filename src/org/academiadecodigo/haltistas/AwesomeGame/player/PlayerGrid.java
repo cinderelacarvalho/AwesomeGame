@@ -51,7 +51,7 @@ public class PlayerGrid {
         try {
             Thread.sleep(5000);
             deleteWall();
-            snake.moveUpP1(2,2);
+            snake.moveUpP1();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

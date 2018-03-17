@@ -25,7 +25,7 @@ public class Snake {
 
     }
 
-    public void moveUpP1(int row, int col){
+    public void moveUpP1(){
         position=snakePositionP1.get(snakePositionP1.size()-1);
         position.move(0,-(snakePositionP1.size()*10));
 

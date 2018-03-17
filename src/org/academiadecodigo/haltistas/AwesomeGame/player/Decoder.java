@@ -24,27 +24,58 @@ public class Decoder {
             playerGrid.start();
         }
 
-        if (words[0].equals("moveP1")) {
+        if (words[0].equals("moves1")) {
+            if (words[1].equals("r")) {
+
+            }
+            if (words[1].equals("l")) {
+
+            }
+            if (words[1].equals("u")) {
+
+            }
+            if (words[1].equals("d")) {
+
+            }
+        }
+
+        if (words[0].equals("moves2")) {
+            if (words[1].equals("r")) {
+
+            }
+            if (words[1].equals("l")) {
+
+            }
+            if (words[1].equals("u")) {
+
+            }
+            if (words[1].equals("d")) {
+
+            }
 
         }
 
-        if (words[0].equals("moveP2")) {
-
-        }
-
-        if (words[0].equals("deleteWall")) {
+        if (words[0].equals("deletewall")) {
             playerGrid.deleteWall();
         }
 
-        if (words[0].equals("greenAp")) {
-            // playerGrid.greenApple();
+        if (words[0].equals("green")) {
+            playerGrid.greenApple(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
         }
-        if (words[0].equals("redA")) {
-            //  playerGrid.redApple();
+        if (words[0].equals("red")) {
+            playerGrid.redApple(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
         }
 
-        if (words[0].equals("deletePos")) {
-            //playerGrid.delete();
+        if (words[0].equals("deletepos")) {
+            playerGrid.delete(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
+        }
+        if (words[0].equals("gameover")) {
+            if (words[1].equals("p1")) {
+
+            }
+            if (words[1].equals("p2")) {
+
+            }
         }
     }
 }

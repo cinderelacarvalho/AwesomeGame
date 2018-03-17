@@ -18,14 +18,18 @@ public class PlayerPosition {
 
     }
 
-    public void drawPos() {
+    public void paintPos() {
 
         rectangle.fill();
 
     }
 
-    public void delete() {
+    public void deletePos() {
         rectangle.delete();
+    }
+
+    public void drawPos(){
+        rectangle.draw();
     }
 
 

@@ -20,9 +20,6 @@ public class PlayerGrid {
         rectangle.draw();
         snake = new Snake();
 
-        drawInitialSnake(20, 30, 80, 30);
-
-
         positions = new PlayerPosition[ROWS][COLS];
 
         for (int i = 0; i < ROWS; i++) {
@@ -34,43 +31,57 @@ public class PlayerGrid {
             }
             initialHeight = 1;
             initialWidth += 1;
-
         }
 
+        start();
 
-        try {
-            Thread.sleep(3000);
-            deleteWall();
+    }
 
-            System.out.println("ASfgdhfjhk");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+    public void start() {
+        fillWall();
+        drawInitialSnake1(20, 30);
+        drawInitialSnake1(20, 31);
+        drawInitialSnake1(20, 32);
+        drawInitialSnake2(80, 30);
+        drawInitialSnake2(80, 31);
+        drawInitialSnake2(80, 32);
 
     }
 
     public void delete(int row, int col) {
-        positions[row][col].delete();
+        positions[row][col].deletePos();
     }
 
-    public void drawInitialSnake(int rowP1, int colP1, int rowP2, int colP2) {
-        snake.initialSnakeP1(rowP1, colP1);
-        snake.intialSnakeP2(rowP2, colP2);
-        ObjectFactory.getWall();
+    public void drawInitialSnake1(int rowP1, int colP1) {
+        snake.initialSnakeP1(positions[rowP1][colP1]);
+
+
+    }
+
+    public void drawInitialSnake2(int rowP2, int colP2) {
+        snake.initialSnakeP2(positions[rowP2][colP2]);
+    }
+
+    public void fillWall() {
+        int i = 0;
+        while (i < COLS) {
+
+            positions[49][i].paintPos();
+            positions[50][i].paintPos();
+            i++;
+
+        }
     }
 
     public void deleteWall() {
         int i = 0;
         while (i < COLS) {
 
-            positions[50][i].drawPos();
-            positions[49][i].delete();
+            positions[49][i].deletePos();
+            positions[50][i].deletePos();
             i++;
-            //new PlayerPosition(50, i).delete();
 
         }
-
     }
 }
 

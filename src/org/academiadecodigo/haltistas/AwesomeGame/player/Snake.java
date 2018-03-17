@@ -4,37 +4,26 @@ import java.util.LinkedList;
 
 public class Snake {
 
-    private PlayerPosition playerPosition;
-    private LinkedList<PlayerPosition> snakePosition;
+    private PlayerPosition position;
+    private LinkedList<PlayerPosition> snakePositionP1;
+    private LinkedList<PlayerPosition> snakePositionP2;
 
     public Snake() {
-        snakePosition = new LinkedList<>();
+        snakePositionP1 = new LinkedList<>();
+        snakePositionP2 = new LinkedList<>();
     }
 
-    public void initialSnakeP1(int row, int col) {
-        playerPosition = new PlayerPosition(row, col);
-        playerPosition.drawPos();
-        snakePosition.add(playerPosition);
-        playerPosition = new PlayerPosition(row, col-1);
-        playerPosition.drawPos();
-        snakePosition.add(playerPosition);
-        playerPosition = new PlayerPosition(row, col-2);
-        playerPosition.drawPos();
-        snakePosition.add(playerPosition);
-
+    public void initialSnakeP1(PlayerPosition position) {
+        snakePositionP1.add(position);
+        position.paintPos();
 
     }
 
-    public void intialSnakeP2(int row, int col){
-        playerPosition = new PlayerPosition(row, col);
-        playerPosition.drawPos();
-        snakePosition.add(playerPosition);
-        playerPosition = new PlayerPosition(row, col-1);
-        playerPosition.drawPos();
-        snakePosition.add(playerPosition);
-        playerPosition = new PlayerPosition(row, col-2);
-        playerPosition.drawPos();
-        snakePosition.add(playerPosition);
+    public void initialSnakeP2(PlayerPosition position) {
+        snakePositionP2.add(position);
+        position.paintPos();
 
     }
+
 }
+

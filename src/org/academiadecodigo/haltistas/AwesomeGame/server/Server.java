@@ -22,7 +22,7 @@ public class Server {
             serverSocket = new ServerSocket(portNumber);
             executorService = Executors.newCachedThreadPool();
             serverHelpers = new ArrayList<>();
-            serverGrid = new ServerGrid();
+            serverGrid = new ServerGrid(this);
         } catch (IOException e) {
             e.printStackTrace();
         }

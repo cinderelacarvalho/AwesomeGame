@@ -5,29 +5,63 @@ import java.util.LinkedList;
 public class Snake {
 
     private PlayerPosition position;
-    private LinkedList<PlayerPosition> snakePositionP1;
-    private LinkedList<PlayerPosition> snakePositionP2;
+    private LinkedList<PlayerPosition> snakePosition;
+    private String name;
+    private PlayerGrid grid;
 
-    public Snake() {
-        snakePositionP1 = new LinkedList<>();
-        snakePositionP2 = new LinkedList<>();
+
+    public Snake(String name, PlayerGrid grid, PlayerPosition position1, PlayerPosition position2, PlayerPosition position3) {
+        this.name = name;
+        this.grid = grid;
+        snakePosition = new LinkedList<>();
+        increaseSnake(position1);
+        increaseSnake(position2);
+        increaseSnake(position3);
     }
 
-    public void initialSnakeP1(PlayerPosition position) {
-        snakePositionP1.add(position);
+    public void increaseSnake(PlayerPosition position) {
+        snakePosition.add(position);
         position.paintPos();
+    }
+
+    public void moveRight() {
+
+        position = grid.getPos((snakePosition.get(0).getRow()) + 1, snakePosition.get(0).getCol());
+        move(position);
 
     }
 
-    public void initialSnakeP2(PlayerPosition position) {
-        snakePositionP2.add(position);
-        position.paintPos();
+
+    public void moveUp() {
+
+        position = grid.getPos(snakePosition.get(0).getRow(), (snakePosition.get(0).getCol()) - 1);
+        move(position);
 
     }
 
-    public void moveUpP1(){
-        position=snakePositionP1.get(snakePositionP1.size()-1);
-        position.move(0,-(snakePositionP1.size()*10));
+    public void moveDown() {
+
+        position = grid.getPos(snakePosition.get(0).getRow(), (snakePosition.get(0).getCol()) + 1);
+        move(position);
+
+    }
+
+
+    public void moveLeft() {
+
+        position = grid.getPos((snakePosition.get(0).getRow()) - 1, (snakePosition.get(0).getCol()));
+        move(position);
+    }
+
+
+    public void move(PlayerPosition newPos) {
+
+        position = snakePosition.get(snakePosition.size() - 1);
+        position.deletePos();
+
+        snakePosition.remove(snakePosition.size() - 1);
+        snakePosition.addFirst(newPos);
+        newPos.paintPos();
 
     }
 

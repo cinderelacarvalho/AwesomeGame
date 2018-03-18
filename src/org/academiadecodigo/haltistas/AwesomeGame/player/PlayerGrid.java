@@ -5,21 +5,19 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 public class PlayerGrid {
 
-    private final int CELLSIZE = 10;
-    private final int PADDING = 10;
+    private static final int CELLSIZE = 10;
+    private static final int PADDING = 10;
     private final int ROWS = 100;
     private final int COLS = 60;
 
     private Snake snake;
     private PlayerPosition[][] positions;
-    private int initialWidth = 1;
-    private int initialHeight = 1;
+    private int initialWidth = 0;
+    private int initialHeight = 0;
 
     public void init() {
         Rectangle rectangle = new Rectangle(PADDING, PADDING, ROWS * CELLSIZE, COLS * CELLSIZE);
         rectangle.draw();
-        snake = new Snake();
-
         positions = new PlayerPosition[ROWS][COLS];
 
         for (int i = 0; i < ROWS; i++) {
@@ -29,7 +27,7 @@ public class PlayerGrid {
                 initialHeight += 1;
 
             }
-            initialHeight = 1;
+            initialHeight = 0;
             initialWidth += 1;
         }
         start();
@@ -39,36 +37,32 @@ public class PlayerGrid {
 
     public void start() {
         fillWall();
-        drawInitialSnake1(20, 30);
-        drawInitialSnake1(20, 31);
-        drawInitialSnake1(20, 32);
-        drawInitialSnake2(80, 30);
-        drawInitialSnake2(80, 31);
-        drawInitialSnake2(80, 32);
-        greenApple(44,7);
-        redApple(3,3);
+        snake = new Snake("S1", this, positions[20][30], positions[20][31], positions[20][32]);
+        //  snake = new Snake("S2", this, positions[80][30], positions[80][31], positions[80][32]);
+        greenApple(44, 7);
+        redApple(3, 3);
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(30000);
             deleteWall();
-            snake.moveUpP1();
+
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
     }
 
+    public PlayerPosition getPos(int row, int col) {
+        return positions[row][col];
+    }
+
     public void delete(int row, int col) {
         positions[row][col].deletePos();
     }
 
-    public void drawInitialSnake1(int rowP1, int colP1) {
-        snake.initialSnakeP1(positions[rowP1][colP1]);
-
-    }
-
-    public void drawInitialSnake2(int rowP2, int colP2) {
-        snake.initialSnakeP2(positions[rowP2][colP2]);
+    public void increaseSnake(int rowP1, int colP1) {
+        snake.increaseSnake(positions[rowP1][colP1]);
     }
 
     public void greenApple(int row, int col) {
@@ -76,7 +70,7 @@ public class PlayerGrid {
 
     }
 
-    public void redApple(int row, int col){
+    public void redApple(int row, int col) {
         positions[row][col].paintRedApple();
     }
 

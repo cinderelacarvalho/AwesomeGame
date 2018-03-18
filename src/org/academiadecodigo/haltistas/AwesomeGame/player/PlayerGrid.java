@@ -10,7 +10,8 @@ public class PlayerGrid {
     private final int ROWS = 100;
     private final int COLS = 60;
 
-    private Snake snake;
+    private Snake snake1;
+    private Snake snake2;
     private PlayerPosition[][] positions;
     private int initialWidth = 0;
     private int initialHeight = 0;
@@ -37,13 +38,13 @@ public class PlayerGrid {
 
     public void start() {
         fillWall();
-        snake = new Snake("S1", this, positions[20][30], positions[20][31], positions[20][32]);
-        //  snake = new Snake("S2", this, positions[80][30], positions[80][31], positions[80][32]);
+        snake1 = new Snake("S1", this, positions[20][30], positions[20][31], positions[20][32]);
+        snake2 = new Snake("S2", this, positions[80][30], positions[80][31], positions[80][32]);
         greenApple(44, 7);
         redApple(3, 3);
 
         try {
-            Thread.sleep(30000);
+            Thread.sleep(3000);
             deleteWall();
 
 
@@ -57,17 +58,56 @@ public class PlayerGrid {
         return positions[row][col];
     }
 
-    public void delete(int row, int col) {
-        positions[row][col].deletePos();
+    public void increaseSnake1(int rowP1, int colP1) {
+        snake1.increaseSnake(positions[rowP1][colP1]);
     }
 
-    public void increaseSnake(int rowP1, int colP1) {
-        snake.increaseSnake(positions[rowP1][colP1]);
+    public void increaseSnake2(int rowP1, int colP1) {
+        snake2.increaseSnake(positions[rowP1][colP1]);
+    }
+
+    public void deleteS1(int row, int col) {
+        snake1.removePos(positions[row][col]);
+    }
+
+    public void deleteS2(int row, int col) {
+        snake2.removePos(positions[row][col]);
+    }
+
+    public void moveUpS1() {
+        snake1.moveUp();
+    }
+
+    public void moveUpS2() {
+        snake2.moveUp();
+    }
+
+    public void moveDownS1() {
+        snake1.moveDown();
+    }
+
+    public void moveDownS2() {
+        snake2.moveDown();
+    }
+
+    public void moveLeftS1() {
+        snake1.moveLeft();
+    }
+
+    public void moveLeftS2() {
+        snake2.moveLeft();
+    }
+
+    public void moveRightS1() {
+        snake1.moveRight();
+    }
+
+    public void moveRightS2() {
+        snake2.moveRight();
     }
 
     public void greenApple(int row, int col) {
         positions[row][col].paintGreenApple();
-
     }
 
     public void redApple(int row, int col) {

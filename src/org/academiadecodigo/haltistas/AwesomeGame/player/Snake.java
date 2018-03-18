@@ -14,13 +14,13 @@ public class Snake {
         this.name = name;
         this.grid = grid;
         snakePosition = new LinkedList<>();
-        increaseSnake(position1);
-        increaseSnake(position2);
         increaseSnake(position3);
+        increaseSnake(position2);
+        increaseSnake(position1);
     }
 
     public void increaseSnake(PlayerPosition position) {
-        snakePosition.add(position);
+        snakePosition.add(0,position);
         position.paintPos();
     }
 
@@ -56,12 +56,15 @@ public class Snake {
 
     public void move(PlayerPosition newPos) {
 
-        position = snakePosition.get(snakePosition.size() - 1);
-        position.deletePos();
-
-        snakePosition.remove(snakePosition.size() - 1);
         snakePosition.addFirst(newPos);
         newPos.paintPos();
+
+    }
+
+    public void removePos(PlayerPosition position){
+        position = snakePosition.get(snakePosition.size() - 1);
+        position.deletePos();
+        snakePosition.remove(snakePosition.size() - 1);
 
     }
 

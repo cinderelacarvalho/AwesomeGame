@@ -6,18 +6,18 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 public class PlayerPosition {
 
-    private final int CELLSIZE = 10;
-    private final int PADDING = 10;
     private Rectangle rectangle;
     private int row;
     private int col;
 
 
-    public PlayerPosition(int row, int col) {
+    PlayerPosition(int row, int col) {
         this.row = row;
         this.col = col;
 
-        rectangle = new Rectangle(row * CELLSIZE+PADDING, col * CELLSIZE+PADDING,
+        int PADDING = 10;
+        int CELLSIZE = 10;
+        rectangle = new Rectangle(row * CELLSIZE + PADDING, col * CELLSIZE + PADDING,
                 CELLSIZE, CELLSIZE);
 
     }
@@ -39,10 +39,6 @@ public class PlayerPosition {
         rectangle.delete();
     }
 
-    public void drawPos() {
-        rectangle.draw();
-    }
-
     public void paintGreenApple() {
         rectangle.setColor(Color.GREEN);
         rectangle.fill();
@@ -51,10 +47,6 @@ public class PlayerPosition {
     public void paintRedApple() {
         rectangle.setColor(Color.RED);
         rectangle.fill();
-    }
-
-    public void move(int x, int y) {
-        rectangle.translate(x, y);
     }
 
 }

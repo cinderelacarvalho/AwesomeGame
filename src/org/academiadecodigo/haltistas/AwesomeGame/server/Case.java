@@ -8,6 +8,9 @@ public enum Case {
     DOWN,
     LEFT,
     RIGHT,
+    NULL,
     GREEN,
     RED
+
+
 }

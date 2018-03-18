@@ -29,8 +29,8 @@ public class ServerGrid {
     //recebe mensagem do server para alterar direcção
     public void receiveMsg(String msg){
 
-        snake1.move(msg);
-        snake2.move(msg);
+        snake1.setDirection(msg);
+        snake2.setDirection(msg);
 
     }
 
@@ -39,13 +39,22 @@ public class ServerGrid {
     public void start() {
 
         //TODO thread para a cada ciclo de while movimentar
-        //TODO tratar a mensagem...
 
 
+        //TODO  se colidiu com maca verde Move().Este método via receber uma snake
 
+        server.broadcast(snake1.move());
+        server.broadcast(snake2.move());
 
+        //TODO se nao colidiu com macas move() + deleteLast()
 
-        server.broadcast("lkasdjflksjakl");
+        server.broadcast(snake1.deleteLast());
+        server.broadcast(snake2.deleteLast());
+
+        //TODO se colidiu com maca vermelha move() + deleteLast() + deleteLast
+
+        server.broadcast(snake1.deleteLast());
+        server.broadcast(snake2.deleteLast());
 
 
     }

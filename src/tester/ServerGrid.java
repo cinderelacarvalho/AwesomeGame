@@ -5,10 +5,10 @@ public class ServerGrid {
 
     public void init() throws InterruptedException {
 
-        //TODO lado do cliente
+        // lado do cliente
         Grid grid = new Grid();
 
-        //TODO lado do cliente
+        // lado do cliente
         grid.init();
 
         Snake snake1 = new Snake("s1", new ServerPosition(20, 30), new ServerPosition(20, 31), new ServerPosition(20, 32));

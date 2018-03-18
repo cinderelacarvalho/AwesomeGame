@@ -52,16 +52,16 @@ public class Snake {
 
     // TODO se comer maçã não entra neste método
 
-    public String move(Case case) {
+    public String move(Case caseType) {
 
         ServerPosition position;
         positionList.remove(positionList.size() - 1);
         position = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
 
 
-        switch (case){
+        switch (caseType) {
 
-            case :
+            case UP:
 
 
                 position.moveUP();
@@ -103,8 +103,8 @@ public class Snake {
     }
 
     // TODO se comer maça vermelha entra neste método
-    public String eatRedApple(Case case) {
-
+    public String eatRedApple(Case caseType) {
+        return null;
 
     }
 

@@ -6,6 +6,11 @@ public class Main {
 
         ServerGrid serverGrid = new ServerGrid();
 
-        serverGrid.init();
+        try {
+            serverGrid.init();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

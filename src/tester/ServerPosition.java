@@ -11,6 +11,22 @@ public class ServerPosition {
         this.row = row;
     }
 
+    public void moveUP() {
+        row --;
+    }
+
+    public void moveDown() {
+        row ++;
+    }
+
+    public void moveLeft() {
+        column --;
+    }
+
+    public void moveRight() {
+        column ++;
+    }
+
 
     @Override
     public boolean equals(Object o) {

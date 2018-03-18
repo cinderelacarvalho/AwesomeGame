@@ -31,29 +31,36 @@ public class Decoder {
                 }
 
                 if (words[2].equals("u")) {
+                    playerGrid.moveUpS1();
 
                 }
 
                 if (words[2].equals("d")) {
+                    playerGrid.moveDownS1();
 
                 }
 
             }
             if (words[1].equals("s2")) {
 
+
                 if (words[2].equals("r")) {
+                    playerGrid.moveRightS2();
 
                 }
 
                 if (words[2].equals("l")) {
+                    playerGrid.moveLeftS2();
 
                 }
 
                 if (words[2].equals("u")) {
+                    playerGrid.moveUpS2();
 
                 }
 
                 if (words[2].equals("d")) {
+                    playerGrid.moveDownS2();
 
                 }
             }
@@ -82,9 +89,25 @@ public class Decoder {
 
                 if (words[1].equals("p1")) {
 
+                    try {
+                        playerGrid.gameOverImage();
+                        Thread.sleep(3000);
+                        playerGrid.player2Wins();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
                 }
 
                 if (words[1].equals("p2")) {
+                    try {
+                        playerGrid.gameOverImage();
+                        Thread.sleep(3000);
+                        playerGrid.player1Wins();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }

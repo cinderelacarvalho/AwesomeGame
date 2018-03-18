@@ -1,6 +1,7 @@
 package org.academiadecodigo.haltistas.AwesomeGame.player;
 
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
 public class PlayerGrid {
@@ -46,6 +47,7 @@ public class PlayerGrid {
         try {
             Thread.sleep(3000);
             deleteWall();
+
 
 
         } catch (InterruptedException e) {
@@ -135,6 +137,22 @@ public class PlayerGrid {
 
         }
     }
+
+    public void gameOverImage(){
+        Picture pictureGameOver = new Picture(PADDING, PADDING,"resources/Game_Over.jpg");
+        pictureGameOver.draw();
+
+    }
+    public void player1Wins(){
+        Picture picturePlayer1 = new Picture(PADDING,PADDING,"resources/player_1_wins.jpg");
+        picturePlayer1.draw();
+    }
+
+    public void player2Wins(){
+        Picture picturePlayer2 = new Picture(PADDING,PADDING, "resources/player_2_wins.jpg");
+        picturePlayer2.draw();
+    }
 }
+
 
 

@@ -69,6 +69,10 @@ public class Decoder {
                 playerGrid.deleteWall();
             }
 
+            if (words[0].equals("deleteapples")) {
+                playerGrid.deleteApple(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
+            }
+
             if (words[0].equals("green")) {
                 playerGrid.greenApple(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
             }
@@ -82,7 +86,7 @@ public class Decoder {
             }
 
             if (words[0].equals("deletes2")) {
-                playerGrid.deleteS1(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
+                playerGrid.deleteS2(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
             }
 
             if (words[0].equals("gameover")) {

@@ -1,5 +1,6 @@
 package org.academiadecodigo.haltistas.AwesomeGame.player;
 
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -18,8 +19,12 @@ public class PlayerGrid {
     private int initialHeight = 0;
 
     public void init() {
+        Picture sand = new Picture(0, 0, "resources/sand.jpg");
+        sand.draw();
         Rectangle rectangle = new Rectangle(PADDING, PADDING, ROWS * CELLSIZE, COLS * CELLSIZE);
         rectangle.draw();
+
+
         positions = new PlayerPosition[ROWS][COLS];
 
         for (int i = 0; i < ROWS; i++) {
@@ -39,15 +44,31 @@ public class PlayerGrid {
 
     public void start() {
         fillWall();
-        snake1 = new Snake("S1", this, positions[20][30], positions[20][31], positions[20][32]);
-        snake2 = new Snake("S2", this, positions[80][30], positions[80][31], positions[80][32]);
+        snake1 = new Snake("S1", this, positions[20][30], positions[20][31], positions[20][32], Color.BLUE);
+        snake2 = new Snake("S2", this, positions[80][30], positions[80][31], positions[80][32], Color.PINK);
         greenApple(44, 7);
         redApple(3, 3);
 
         try {
             Thread.sleep(3000);
             deleteWall();
+            Thread.sleep(3000);
+            snake2.moveUp();
 
+            Thread.sleep(3000);
+            snake2.moveUp();
+
+            Thread.sleep(3000);
+            snake2.moveUp();
+
+            Thread.sleep(3000);
+            snake2.moveUp();
+
+            Thread.sleep(3000);
+            snake2.moveUp();
+
+            Thread.sleep(3000);
+            snake2.moveUp();
 
 
         } catch (InterruptedException e) {
@@ -59,14 +80,14 @@ public class PlayerGrid {
     public PlayerPosition getPos(int row, int col) {
         return positions[row][col];
     }
-
-    public void increaseSnake1(int rowP1, int colP1) {
+/*
+    public void increaseSnake(int rowP1, int colP1) {
         snake1.increaseSnake(positions[rowP1][colP1]);
     }
 
     public void increaseSnake2(int rowP1, int colP1) {
         snake2.increaseSnake(positions[rowP1][colP1]);
-    }
+    } */
 
     public void deleteS1(int row, int col) {
         snake1.removePos(positions[row][col]);
@@ -112,6 +133,10 @@ public class PlayerGrid {
         positions[row][col].paintGreenApple();
     }
 
+    public void deleteApple(int row, int col) {
+        positions[row][col].deletePos();
+    }
+
     public void redApple(int row, int col) {
         positions[row][col].paintRedApple();
     }
@@ -120,8 +145,8 @@ public class PlayerGrid {
         int i = 0;
         while (i < COLS) {
 
-            positions[49][i].paintPos();
-            positions[50][i].paintPos();
+            positions[49][i].paintPos(Color.GRAY);
+            positions[50][i].paintPos(Color.GRAY);
             i++;
 
         }
@@ -138,18 +163,19 @@ public class PlayerGrid {
         }
     }
 
-    public void gameOverImage(){
-        Picture pictureGameOver = new Picture(PADDING, PADDING,"resources/Game_Over.jpg");
+    public void gameOverImage() {
+        Picture pictureGameOver = new Picture(PADDING, PADDING, "resources/Game_Over.jpg");
         pictureGameOver.draw();
 
     }
-    public void player1Wins(){
-        Picture picturePlayer1 = new Picture(PADDING,PADDING,"resources/player_1_wins.jpg");
+
+    public void player1Wins() {
+        Picture picturePlayer1 = new Picture(PADDING, PADDING, "resources/player_1_wins.jpg");
         picturePlayer1.draw();
     }
 
-    public void player2Wins(){
-        Picture picturePlayer2 = new Picture(PADDING,PADDING, "resources/player_2_wins.jpg");
+    public void player2Wins() {
+        Picture picturePlayer2 = new Picture(PADDING, PADDING, "resources/player_2_wins.jpg");
         picturePlayer2.draw();
     }
 }

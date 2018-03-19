@@ -30,7 +30,8 @@ public class PlayerPosition {
         return col;
     }
 
-    public void paintPos() {
+    public void paintPos(Color color) {
+        rectangle.setColor(color);
         rectangle.fill();
 
     }
@@ -48,5 +49,4 @@ public class PlayerPosition {
         rectangle.setColor(Color.RED);
         rectangle.fill();
     }
-
 }

@@ -12,110 +12,52 @@ public class Decoder {
 
 
     public void decoding(String msg) {
+        int snake = 0;
+        int row = 0;
+        int col = 0;
 
         String[] words = msg.split("-");
 
+        switch (words[0]) {
 
-        if (words[0].equals("start")) {
-            playerGrid.start();
-        }
-
-        if (words[0].equals("move")) {
-            if (words[1].equals("s1")) {
-                if (words[2].equals("r")) {
-                    playerGrid.moveRightS1();
-                }
-
-                if (words[2].equals("l")) {
-                    playerGrid.moveLeftS1();
-                }
-
-                if (words[2].equals("u")) {
-                    playerGrid.moveUpS1();
-
-                }
-
-                if (words[2].equals("d")) {
-                    playerGrid.moveDownS1();
-
-                }
-
-            }
-            if (words[1].equals("s2")) {
-
-
-                if (words[2].equals("r")) {
-                    playerGrid.moveRightS2();
-
-                }
-
-                if (words[2].equals("l")) {
-                    playerGrid.moveLeftS2();
-
-                }
-
-                if (words[2].equals("u")) {
-                    playerGrid.moveUpS2();
-
-                }
-
-                if (words[2].equals("d")) {
-                    playerGrid.moveDownS2();
-
-                }
-            }
-
-            if (words[0].equals("deletewall")) {
+            case "start":
+                playerGrid.start();
+                break;
+            case "move":
+                snake = Integer.parseInt(words[1]);
+                playerGrid.move(snake, words[2]);
+                break;
+            case "deletewall":
                 playerGrid.deleteWall();
-            }
+                break;
+            case "deleteapple":
+                row = Integer.parseInt(words[1]);
+                col = Integer.parseInt(words[2]);
+                playerGrid.deleteApple(row, col);
+                break;
+            case "green":
+                row = Integer.parseInt(words[1]);
+                col = Integer.parseInt(words[2]);
+                playerGrid.greenApple(row, col);
+                break;
+            case "red":
+                row = Integer.parseInt(words[1]);
+                col = Integer.parseInt(words[2]);
+                playerGrid.redApple(row, col);
+                break;
+            case "delete":
+                snake = Integer.parseInt(words[1]);
+                row = Integer.parseInt(words[2]);
+                col = Integer.parseInt(words[3]);
+                playerGrid.deleteSnake(snake, row, col);
+                break;
+            case "gameover":
+                playerGrid.gameOver(words[1]);
+                break;
 
-            if (words[0].equals("deleteapples")) {
-                playerGrid.deleteApple(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
-            }
-
-            if (words[0].equals("green")) {
-                playerGrid.greenApple(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
-            }
-
-            if (words[0].equals("red")) {
-                playerGrid.redApple(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
-            }
-
-            if (words[0].equals("deletes1")) {
-                playerGrid.deleteS1(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
-            }
-
-            if (words[0].equals("deletes2")) {
-                playerGrid.deleteS2(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
-            }
-
-            if (words[0].equals("gameover")) {
-
-                if (words[1].equals("p1")) {
-
-                    try {
-                        playerGrid.gameOverImage();
-                        Thread.sleep(3000);
-                        playerGrid.player2Wins();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-                if (words[1].equals("p2")) {
-                    try {
-                        playerGrid.gameOverImage();
-                        Thread.sleep(3000);
-                        playerGrid.player1Wins();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
         }
     }
 }
+
+
 

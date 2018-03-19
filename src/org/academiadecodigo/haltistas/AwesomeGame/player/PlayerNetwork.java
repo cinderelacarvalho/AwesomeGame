@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class PlayerNetwork {
+public class PlayerNetwork implements Runnable {
 
     private Socket playerSocket;
     private PrintWriter toServer;

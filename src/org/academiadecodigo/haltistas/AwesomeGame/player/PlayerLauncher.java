@@ -11,13 +11,12 @@ public class PlayerLauncher {
             playerNetwork = new PlayerNetwork("127.0.0.1", 8765);
             playerNetwork.init();
 
+            Thread thread = new Thread(playerNetwork);
+            thread.start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-       // Thread thread= new Thread(playerNetwork);
-       // thread.start();
-
 
 
     }

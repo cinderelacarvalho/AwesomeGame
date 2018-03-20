@@ -2,15 +2,12 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 
 public enum Case {
 
-    //TODO este enum também deveria ser utilizado pelos jogadores para transmitir direcções.
+    //TODO o null pode dar jeito para o null de não receber informações
 
     UP,
     DOWN,
     LEFT,
     RIGHT,
-    NULL,
-    GREEN,
-    RED
-
+    NULL
 
 }

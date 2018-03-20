@@ -1,5 +1,7 @@
 package org.academiadecodigo.haltistas.AwesomeGame.server;
 
+import org.academiadecodigo.haltistas.AwesomeGame.server.apple.Apple;
+import org.academiadecodigo.haltistas.AwesomeGame.server.apple.AppleType;
 import sun.tools.tree.CaseStatement;
 
 import javax.swing.text.Position;
@@ -14,11 +16,13 @@ public class Snake {
     private Case caseType;
     private boolean isEatingGreen;
     private boolean isEatingRed;
+    private ServerGrid serverGrid;
 
 
-    public Snake(String name, ServerPosition initial1, ServerPosition initial2, ServerPosition initial3) {
+    public Snake(String name, ServerPosition initial1, ServerPosition initial2, ServerPosition initial3, ServerGrid serverGrid) {
 
         this.name = name;
+        this.serverGrid = serverGrid;
         caseType = Case.UP;
         positionList = new LinkedList<>();
 
@@ -77,7 +81,7 @@ public class Snake {
                     over = true; // ....
                 }
 
-                msg = "move-" + name + "d";
+                msg = "move-" + name + "-d";
                 break;
 
             case LEFT:
@@ -119,47 +123,44 @@ public class Snake {
         int row = (positionList.get(positionList.size() - 1).getRow());
         positionList.remove(positionList.size() - 1);
 
-        String delete = "delete" + name + "-" + row + "-" + col;
+        String delete = "delete" + "-" + name + "-" + row + "-" + col;
         return delete;
     }
 
-    public boolean isColliding(Snake snake) {// falta distinguir qual delas com a head
-
-        for (ServerPosition position1 : positionList) {
-            for (ServerPosition position2 : snake.positionList) {
-                if (position1.equals(position2)) {
-                    return over = true;
-                }
-            }
-
-        }
-        return over = false;
-    }
-
-    public boolean isEatingGreen(List green) { //continuar quando tiver maçãs
+    public void checkCollision(Snake snake) {
 
         ServerPosition head = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
 
-        for (ServerPosition position : positionList) {
-            if (apple.compare(position)) {
-                return isEatingGreen = true;
+        for (ServerPosition position : snake.positionList) {
+            if (head.equals(position)) {
+                over = true;
             }
         }
-        return isEatingGreen = false; // TODO falta método set isEatingGreen. Ver onde vai ser a invocação do método
+
     }
 
-    public boolean isEatingRed(List red) { //continuar quando tiver maçãs //implementar metodo compare nas macas
-
+    public boolean isEatingApple(Apple apple) {
 
         ServerPosition head = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
 
-        for (ServerPosition position : positionList) {
-            if (apple.compare(position)) {
-                return isEatingRed = true;
+        if (apple.compare(head)) {
+            AppleType type = apple.getType();
+
+            switch (type) {
+
+                case RED_APPLE:
+                    isEatingRed = true;
+
+                case GREEN_APPLE:
+                    isEatingGreen = true;
+
+                default:
+                    System.out.println("Apple colliding snake error");
             }
         }
-        return isEatingRed = false; // TODO falta método set isEatingRed. Ver onde vai ser a invocação do método
+        return isEatingGreen = false;
     }
+
 
     public void setGreenFalse() {
         isEatingGreen = false;
@@ -169,14 +170,24 @@ public class Snake {
         isEatingRed = false;
     }
 
+    public boolean getIsEatingGreen() {
+        return isEatingGreen;
+    }
+
+    public boolean getIsEatingRed() {
+        return isEatingRed;
+    }
+
     public String getName() {
         return name;
     }
 
-    public void setOver() { //nao sei se vai ser necessario
+    public void setOver() {
         over = true;
+        serverGrid.setOver(name);
 
     }
+
 
 
 }

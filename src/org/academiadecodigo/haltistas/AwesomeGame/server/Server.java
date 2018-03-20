@@ -14,6 +14,7 @@ public class Server {
     private ExecutorService executorService;
     private ArrayList<ServerHelper> serverHelpers;
     private ServerGrid serverGrid;
+    private int name=0;
 
 
     public Server(int portNumber) {
@@ -43,7 +44,9 @@ public class Server {
                 System.out.println("Waiting for connection");
                 clientSocket = serverSocket.accept();
 
-                ServerHelper helper = new ServerHelper(clientSocket, this);
+                ServerHelper helper = new ServerHelper(name,clientSocket, this);
+                name++;
+
                 executorService.submit(helper);
                 serverHelpers.add(helper);
 
@@ -68,6 +71,7 @@ public class Server {
 
     public void broadcast(String msg) {
         synchronized (serverHelpers) {
+
             for (ServerHelper h : serverHelpers) {
 
                 h.sendMsg(msg);
@@ -77,7 +81,7 @@ public class Server {
     }
 
     public void receivedMsg(String msg) {
-
+        System.out.println(msg);
         serverGrid.receiveMsg(msg);
 
     }

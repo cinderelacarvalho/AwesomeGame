@@ -66,6 +66,7 @@ public class Snake {
 
                 if (position.getRow() == ServerPosition.MIN_ROW) {
                     over = true;
+                    serverGrid.setOver();
                 }
 
                 msg = "move-" + name + "-u";
@@ -78,6 +79,7 @@ public class Snake {
 
                 if (position.getRow() == ServerPosition.MAX_ROW) {
                     over = true;
+                    serverGrid.setOver();
                 }
 
                 msg = "move-" + name + "-d";
@@ -90,6 +92,7 @@ public class Snake {
 
                 if (position.getColumn() == ServerPosition.MIN_COLUMN) {
                     over = true;
+                    serverGrid.setOver();
                 }
 
                 msg = "move-" + name + "-l";
@@ -102,6 +105,7 @@ public class Snake {
 
                 if (position.getColumn() == ServerPosition.MAX_COLUMN) {
                     over = true;
+                    serverGrid.setOver();
                 }
 
                 msg = "move-" + name + "-r";
@@ -193,6 +197,7 @@ public class Snake {
 
     public void setOver() {
         over = true;
+        serverGrid.setOver();
         serverGrid.setOver(name);
 
     }

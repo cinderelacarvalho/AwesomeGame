@@ -8,9 +8,11 @@ public class ServerHelper implements Runnable {
     private Socket clientSocket;
     private Server server;
     private BufferedReader fromPlayer;
+    private int name;
 
 
-    ServerHelper(Socket clientSocket, Server server) throws IOException {
+    ServerHelper(int name, Socket clientSocket, Server server) throws IOException {
+        this.name = name;
         this.clientSocket = clientSocket;
         this.server = server;
         fromPlayer = new BufferedReader(new InputStreamReader(
@@ -21,15 +23,14 @@ public class ServerHelper implements Runnable {
     @Override
     public void run() {
 
+
         while (!clientSocket.isClosed()) {
 
             try {
 
                 String msg = fromPlayer.readLine();
 
-                //server.receivedMsg(name + "-" + msg);
-
-
+                server.receivedMsg(name + "-" + msg);
             } catch (IOException e) {
                 e.printStackTrace();
             }

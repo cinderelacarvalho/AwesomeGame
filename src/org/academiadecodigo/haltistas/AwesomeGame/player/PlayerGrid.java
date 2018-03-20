@@ -38,17 +38,17 @@ public class PlayerGrid {
             initialHeight = 0;
             initialWidth += 1;
         }
-    }
-
-    public void start() {
         snakeList = new ArrayList<>();
-        fillWall();
         Snake snake1 = new Snake(this, positions[20][30], positions[20][31],
                 positions[20][32], Color.BLUE);
         snakeList.add(snake1);
         Snake snake2 = new Snake(this, positions[80][30], positions[80][31],
                 positions[80][32], Color.PINK);
         snakeList.add(snake2);
+    }
+
+    public void start() {
+        fillWall();
 
     }
 

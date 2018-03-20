@@ -3,11 +3,12 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.Apple;
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.AppleFactory;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ServerGrid implements Runnable{
+public class ServerGrid implements Runnable {
 
 
     private Server server;
@@ -19,6 +20,7 @@ public class ServerGrid implements Runnable{
     private static final int INITIAL_APPLES = 3;
     private static final int ROUND_APPLES = 1;
     private Timer timer;
+    private ArrayList<Snake> snakeList;
 
 
     public ServerGrid(Server server) {
@@ -40,18 +42,22 @@ public class ServerGrid implements Runnable{
 
         synchronized (this) {
 
-            while (!server.notEnoughPlayers()) {
+            while (server.notEnoughPlayers()) {
                 try {
                     wait();
                 } catch (InterruptedException e) {
                 }
             }
         }
+        snakeList = new ArrayList<>();
+
         snake1 = new Snake("0", new ServerPosition(20, 30), new ServerPosition(20, 31),
                 new ServerPosition(20, 32), this);
+        snakeList.add(snake1);
 
         snake2 = new Snake("1", new ServerPosition(80, 30), new ServerPosition(80, 31),
                 new ServerPosition(80, 32), this);
+        snakeList.add(snake2);
 
         server.broadcast("start");
 
@@ -65,8 +71,12 @@ public class ServerGrid implements Runnable{
     public void receiveMsg(String msg) {
 
         //if is player 1 do snake 1, player 2 do snake 2 setDirection
-        snake1.setDirection(msg);
-        snake2.setDirection(msg);
+        String[]words=msg.split("-");
+
+        int numSnake=  Integer.parseInt(words[0]);
+
+        snakeList.get(numSnake).setDirection(words[1]);
+
 
     }
 
@@ -97,13 +107,12 @@ public class ServerGrid implements Runnable{
             }
         }
 
-        timer.scheduleAtFixedRate(new MyVerySpecialTask(),0, 1000);
-
+        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 1000);
 
 
     }
 
-    private void checkEatingApple (LinkedList<Apple> applesList) {
+    private void checkEatingApple(LinkedList<Apple> applesList) {
 
         for (Apple apple : applesList) {  //TODO verificar se o metodo fuciona
 
@@ -115,7 +124,7 @@ public class ServerGrid implements Runnable{
                 int col = apple.getPosition().getColumn();
                 int row = apple.getPosition().getRow();
 
-                server.broadcast("deleteapple-" + row + col);
+                server.broadcast("deleteapple-" + row + "-" + col);
                 applesList.remove(apple);
                 snake1.setEatingAppleFalse();
                 snake2.setEatingAppleFalse();
@@ -126,7 +135,7 @@ public class ServerGrid implements Runnable{
 
     private void isSnakeEatingGreen(Snake snake) {
 
-        if(snake.getIsEatingGreen()) {
+        if (snake.getIsEatingGreen()) {
 
             server.broadcast(snake.move());
             snake.setIsEatingGreenFalse();
@@ -135,7 +144,7 @@ public class ServerGrid implements Runnable{
 
     private void isSnakeNotEating(Snake snake) {
 
-        if(!snake.getIsEatingGreen() && !snake.getIsEatingRed()) {
+        if (!snake.getIsEatingGreen() && !snake.getIsEatingRed()) {
 
             server.broadcast(snake.move());
             server.broadcast(snake.deleteLast());
@@ -144,7 +153,7 @@ public class ServerGrid implements Runnable{
 
     private void isSnakeEatingRed(Snake snake) {
 
-        if(snake.getIsEatingRed()) {
+        if (snake.getIsEatingRed()) {
 
             server.broadcast(snake.move());
             server.broadcast(snake.deleteLast());
@@ -170,5 +179,7 @@ public class ServerGrid implements Runnable{
         server.broadcast("gameover-" + name);
     }
 
-
+    public void setOver() {
+        over = true;
+    }
 }

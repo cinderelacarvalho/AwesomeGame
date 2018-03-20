@@ -6,7 +6,7 @@ public class AppleFactory {
 
     public Apple getNewApple() {
 
-        int col = (int) Math.floor(Math.random() * ServerPosition.MAX_COLUNM);
+        int col = (int) Math.floor(Math.random() * ServerPosition.MAX_COLUMN);
         int row = (int) Math.floor(Math.random() * ServerPosition.MAX_ROW);
 
         ServerPosition position = new ServerPosition(col, row);
@@ -18,11 +18,11 @@ public class AppleFactory {
 
         switch (appleType) {
 
-            case RED_APPLE:
+            case RED:
                 apple = new Apple(position, appleType);
                 break;
 
-            case GREEN_APPLE:
+            case GREEN:
                 apple = new Apple(position, appleType);
                 break;
 

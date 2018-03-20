@@ -2,9 +2,7 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.Apple;
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.AppleType;
-import sun.tools.tree.CaseStatement;
 
-import javax.swing.text.Position;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +11,7 @@ public class Snake {
     private List<ServerPosition> positionList;
     private String name;
     private boolean over;
-    private Case caseType;
+    private Direction direction;
     private boolean isEatingGreen;
     private boolean isEatingRed;
     private ServerGrid serverGrid;
@@ -23,7 +21,7 @@ public class Snake {
 
         this.name = name;
         this.serverGrid = serverGrid;
-        caseType = Case.UP;
+        direction = Direction.UP;
         positionList = new LinkedList<>();
 
         positionList.add(initial1);
@@ -34,31 +32,31 @@ public class Snake {
 
     public void setDirection(String msg) {
 
-        if (msg.equals("up") && (caseType.equals(Case.RIGHT) || caseType.equals(Case.LEFT))) {
-            caseType = Case.UP;
+        if (msg.equals("up") && (direction.equals(Direction.RIGHT) || direction.equals(Direction.LEFT))) {
+            direction = Direction.UP;
         }
 
-        if (msg.equals("down") && (caseType.equals(Case.RIGHT) || caseType.equals(Case.LEFT))) {
-            caseType = Case.DOWN;
+        if (msg.equals("down") && (direction.equals(Direction.RIGHT) || direction.equals(Direction.LEFT))) {
+            direction = Direction.DOWN;
         }
 
-        if (msg.equals("left") && (caseType.equals(Case.UP)) || caseType.equals(Case.DOWN)) {
-            caseType = Case.LEFT;
+        if (msg.equals("left") && (direction.equals(Direction.UP)) || direction.equals(Direction.DOWN)) {
+            direction = Direction.LEFT;
         }
 
-        if (msg.equals("right") && (caseType.equals(Case.UP)) || caseType.equals(Case.DOWN)) {
-            caseType = Case.RIGHT;
+        if (msg.equals("right") && (direction.equals(Direction.UP)) || direction.equals(Direction.DOWN)) {
+            direction = Direction.RIGHT;
         }
-        caseType = caseType;
+        direction = direction;
 
     }
 
     public String move() {
 
         ServerPosition position = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
-        String msg = new String();
+        String msg = "";
 
-        switch (caseType) {
+        switch (direction) {
 
             case UP:
 
@@ -89,7 +87,7 @@ public class Snake {
                 position.moveLeft();
                 positionList.add(0, position);
 
-                if (position.getColumn() == ServerPosition.MIN_COLUNM) {
+                if (position.getColumn() == ServerPosition.MIN_COLUMN) {
                     over = true; // ....
                 }
 
@@ -101,7 +99,7 @@ public class Snake {
                 position.moveRight();
                 positionList.add(0, position);
 
-                if (position.getColumn() == ServerPosition.MAX_COLUNM) {
+                if (position.getColumn() == ServerPosition.MAX_COLUMN) {
                     over = true; //.......
                 }
 
@@ -119,11 +117,9 @@ public class Snake {
 
     public String deleteLast() {
 
-        int col = (positionList.get(positionList.size() - 1).getColumn());
-        int row = (positionList.get(positionList.size() - 1).getRow());
         positionList.remove(positionList.size() - 1);
 
-        String delete = "delete" + "-" + name + "-" + row + "-" + col;
+        String delete = "delete" + "-" + name;
         return delete;
     }
 
@@ -148,10 +144,10 @@ public class Snake {
 
             switch (type) {
 
-                case RED_APPLE:
+                case RED:
                     isEatingRed = true;
 
-                case GREEN_APPLE:
+                case GREEN:
                     isEatingGreen = true;
 
                 default:

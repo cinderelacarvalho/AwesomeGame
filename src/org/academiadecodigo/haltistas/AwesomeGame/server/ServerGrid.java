@@ -2,7 +2,6 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.Apple;
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.AppleFactory;
-import org.academiadecodigo.haltistas.AwesomeGame.server.apple.AppleType;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +14,7 @@ public class ServerGrid {
     private Snake snake2;
     private Boolean over;
     private AppleFactory appleFactory;
-    private List<Apple> applesList;
+    private LinkedList<Apple> applesList;
     private static final int INITIAL_APPLES = 40;
     private static final int ROUND_APPLES = 10;
 
@@ -40,18 +39,7 @@ public class ServerGrid {
 
         server.broadcast("start");
 
-        for (int i = 0; i < INITIAL_APPLES; i++) {
-
-            applesList.add(appleFactory.getNewApple());
-
-            AppleType type = applesList.get(i).getType();
-            String kind = type.toString();
-            int col = applesList.get(i).getPosition().getColumn();
-            int row = applesList.get(i).getPosition().getRow();
-
-            server.broadcast("kind-" + row + col);
-
-        }
+        getNewApple(INITIAL_APPLES);
 
         start();
 
@@ -73,77 +61,86 @@ public class ServerGrid {
         while (!over) {
 
             // verifica se está a comer maçãs e qual
-            for (Apple apple : applesList) {  //TODO verificar se o metodo fuciona
-
-                Boolean eatingApple1 = snake1.isEatingApple(apple);
-                Boolean eatingApple2 = snake2.isEatingApple(apple);
-
-                if (eatingApple1 || eatingApple2) {
-
-                    int col = apple.getPosition().getColumn();
-                    int row = apple.getPosition().getRow();
-
-                    server.broadcast("deleteapple-" + row + col);
-                    applesList.remove(apple);
-                }
-
-            }
+            checkEatingApple(applesList);
 
             // lógica da movimentação da snake1 para as 3 situações
-            if (snake1.getIsEatingGreen()) {
-
-                server.broadcast(snake1.move());
-                snake1.setGreenFalse();
-            }
-
-            if (!snake1.getIsEatingGreen() && !snake1.getIsEatingRed()) {
-
-                server.broadcast(snake1.move());
-                server.broadcast(snake1.deleteLast());
-            }
-
-            if (snake1.getIsEatingRed()) {
-
-                server.broadcast(snake1.move());
-                server.broadcast(snake1.deleteLast());
-                server.broadcast(snake1.deleteLast());
-                snake1.setRedFalse();
-            }
+            isSnakeEatingGreen(snake1);
+            isSnakeNotEating(snake1);
+            isSnakeEatingRed(snake1);
 
             // lógica da movimentação da snake2 para as 3 situações
-            if (snake2.getIsEatingGreen()) {
-
-                server.broadcast(snake1.move());
-                snake2.setGreenFalse();
-            }
-
-            if (!snake2.getIsEatingGreen() && !snake2.getIsEatingRed()) {
-
-                server.broadcast(snake2.move());
-                server.broadcast(snake2.deleteLast());
-            }
-
-            if (snake2.getIsEatingRed()) {
-
-                server.broadcast(snake2.move());
-                server.broadcast(snake2.deleteLast());
-                server.broadcast(snake2.deleteLast());
-                snake2.setRedFalse();
-            }
+            isSnakeEatingGreen(snake2);
+            isSnakeNotEating(snake2);
+            isSnakeEatingRed(snake2);
 
             snake1.checkCollision(snake2);
-            snake1.checkCollision(snake2);
+            snake2.checkCollision(snake1);
 
-            for (int i = 0; i < ROUND_APPLES; i++) {
+            getNewApple(ROUND_APPLES);
 
-                Apple apple= new Apple(appleFactory.getNewApple().getPosition().getColumn(),appleFactory.getNewApple().getPosition().getRow(), appleFactory.getNewApple().getType());
-
-                //OU fazer pelo counter;
-
-            }
         }
 
     }
+
+    private void checkEatingApple (LinkedList<Apple> applesList) {
+
+        for (Apple apple : applesList) {  //TODO verificar se o metodo fuciona
+
+            Boolean eatingApple1 = snake1.isEatingApple(apple);
+            Boolean eatingApple2 = snake2.isEatingApple(apple);
+
+            if (eatingApple1 || eatingApple2) {
+
+                int col = apple.getPosition().getColumn();
+                int row = apple.getPosition().getRow();
+
+                server.broadcast("deleteapple-" + row + col);
+                applesList.remove(apple);
+            }
+
+        }
+    }
+
+    private void isSnakeEatingGreen(Snake snake) {
+
+        if(snake.getIsEatingGreen()) {
+
+            server.broadcast(snake.move());
+            snake.setGreenFalse();
+        }
+    }
+
+    private void isSnakeNotEating(Snake snake) {
+
+        if(!snake.getIsEatingGreen() && !snake.getIsEatingRed()) {
+
+            server.broadcast(snake.move());
+            server.broadcast(snake.deleteLast());
+        }
+    }
+
+    private void isSnakeEatingRed(Snake snake) {
+
+        if(snake.getIsEatingRed()) {
+
+            server.broadcast(snake.move());
+            server.broadcast(snake.deleteLast());
+            server.broadcast(snake.deleteLast());
+            snake.setRedFalse();
+        }
+
+    }
+
+    private void getNewApple(int number) {
+
+        for (int i = 0; i < number; i++) {
+
+            applesList.add(appleFactory.getNewApple());
+            server.broadcast(applesList.getLast().toString());
+
+        }
+    }
+
 
     public void setOver(String name) {
         over = true;

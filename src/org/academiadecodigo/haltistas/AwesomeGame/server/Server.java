@@ -61,7 +61,6 @@ public class Server {
 
     }
 
-    //invoked by utilitarian class
     public void broadcast(String msg) {
         synchronized (serverHelpers) {
             for (ServerHelper h : serverHelpers) {
@@ -75,8 +74,6 @@ public class Server {
     public void receivedMsg(String msg) {
 
         serverGrid.receiveMsg(msg);
-
-
 
     }
 

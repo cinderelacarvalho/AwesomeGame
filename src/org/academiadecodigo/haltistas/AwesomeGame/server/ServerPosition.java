@@ -2,8 +2,8 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 
 public class ServerPosition {
 
-    public static final int MIN_COLUNM = 0;
-    public static final int MAX_COLUNM = 59;
+    public static final int MIN_COLUMN = 0;
+    public static final int MAX_COLUMN = 59;
     public static final int MIN_ROW = 0;
     public static final int MAX_ROW = 39;
 

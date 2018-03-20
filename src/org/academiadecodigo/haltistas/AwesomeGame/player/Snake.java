@@ -66,7 +66,7 @@ public class Snake {
 
     }
 
-    public void removePos(PlayerPosition position){
+    public void removePos(){
         position = snakePosition.get(snakePosition.size() - 1);
         position.deletePos();
         snakePosition.remove(snakePosition.size() - 1);

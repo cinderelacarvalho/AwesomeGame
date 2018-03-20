@@ -47,9 +47,7 @@ public class Decoder {
                 break;
             case "delete":
                 snake = Integer.parseInt(words[1]);
-                row = Integer.parseInt(words[2]);
-                col = Integer.parseInt(words[3]);
-                playerGrid.deleteSnake(snake, row, col);
+                playerGrid.deleteSnake(snake);
                 break;
             case "gameover":
                 playerGrid.gameOver(words[1]);

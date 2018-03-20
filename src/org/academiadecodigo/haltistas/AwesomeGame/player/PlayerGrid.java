@@ -77,8 +77,8 @@ public class PlayerGrid {
 
     }
 
-    public void deleteSnake(int snake, int row, int col) {
-        snakeList.get(snake).removePos(positions[row][col]);
+    public void deleteSnake(int snake) {
+        snakeList.get(snake).removePos();
     }
 
     public void greenApple(int row, int col) {

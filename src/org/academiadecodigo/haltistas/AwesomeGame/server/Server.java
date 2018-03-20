@@ -23,21 +23,17 @@ public class Server {
             executorService = Executors.newCachedThreadPool();
             serverHelpers = new ArrayList<>();
             serverGrid = new ServerGrid(this);
+            new Thread(serverGrid).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void init() {
-
-        serverGrid.init();
-        start();
-
-    }
 
     public void start() {
 
+        System.out.println("never here");
         //  ExecutorService cachedPool = Executors.newCachedThreadPool();  // Or other type of thread
 
 
@@ -53,12 +49,21 @@ public class Server {
 
                 System.out.println("connected player " + (serverHelpers.indexOf(helper) + 1));
 
+                synchronized (serverGrid) {
+                    if (serverHelpers.size() == 2) {
+                        serverGrid.notifyAll();
+                        return;
+                    }
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
 
-
+    public boolean notEnoughPlayers() {
+        return serverHelpers.size() < 2;
     }
 
     public void broadcast(String msg) {

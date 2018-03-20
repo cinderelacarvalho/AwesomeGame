@@ -27,7 +27,7 @@ public class ServerHelper implements Runnable {
 
                 String msg = fromPlayer.readLine();
 
-                server.receivedMsg(msg);
+                //server.receivedMsg(name + "-" + msg);
 
 
             } catch (IOException e) {

@@ -53,6 +53,9 @@ public class Snake {
 
     public String move() {
 
+        System.out.println("sanke position" + positionList.size());
+
+
         ServerPosition position = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
         String msg = "";
 
@@ -146,9 +149,11 @@ public class Snake {
 
                 case RED:
                     isEatingRed = true;
+                    break;
 
                 case GREEN:
                     isEatingGreen = true;
+                    break;
 
                 default:
                     System.out.println("Apple colliding snake error");

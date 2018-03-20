@@ -37,6 +37,7 @@ public class KeyHandler implements KeyboardHandler {
     }
 
 
+    //TODO delete souts
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
@@ -44,22 +45,22 @@ public class KeyHandler implements KeyboardHandler {
 
             case KeyboardEvent.KEY_UP:
                 System.out.println("UP");
-                player.sendMsg("UP");
+                player.sendMsg("up");
                 break;
 
             case KeyboardEvent.KEY_DOWN:
                 System.out.println("down");
-                player.sendMsg("DOWN");
+                player.sendMsg("down");
                 break;
 
             case KeyboardEvent.KEY_LEFT:
                 System.out.println("left");
-                player.sendMsg("LEFT");
+                player.sendMsg("left");
                 break;
 
             case KeyboardEvent.KEY_RIGHT:
                 System.out.println("right");
-                player.sendMsg("RIGHT");
+                player.sendMsg("right");
                 break;
         }
     }

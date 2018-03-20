@@ -8,13 +8,12 @@ public class Snake {
 
     private PlayerPosition position;
     private LinkedList<PlayerPosition> snakePosition;
-    private String name;
     private PlayerGrid grid;
     private Color color;
 
 
-    public Snake(String name, PlayerGrid grid, PlayerPosition position1, PlayerPosition position2, PlayerPosition position3, Color color) {
-        this.name = name;
+    public Snake(PlayerGrid grid, PlayerPosition position1, PlayerPosition position2,
+                 PlayerPosition position3, Color color) {
         this.grid = grid;
         this.color=color;
         snakePosition = new LinkedList<>();

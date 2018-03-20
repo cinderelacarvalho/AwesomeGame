@@ -5,18 +5,16 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 
 public class PlayerGrid {
 
-    private static final int CELLSIZE = 10;
-    private static final int PADDING = 10;
+    private final int CELL_SIZE = 10;
+    private final int PADDING = 10;
     private final int ROWS = 100;
     private final int COLS = 60;
     private final int wallPos1 = 49;
     private final int wallPos2 = 50;
-
 
     private PlayerPosition[][] positions;
     private int initialWidth = 0;
@@ -25,14 +23,14 @@ public class PlayerGrid {
 
     public void init() {
         new Picture(0, 0, "resources/sand.jpg").draw();
-        new Rectangle(PADDING, PADDING, ROWS * CELLSIZE, COLS * CELLSIZE).draw();
+        new Rectangle(PADDING, PADDING, ROWS * CELL_SIZE, COLS * CELL_SIZE).draw();
 
 
         positions = new PlayerPosition[ROWS][COLS];
 
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                positions[i][j] = new PlayerPosition(initialWidth, initialHeight);
+                positions[i][j] = new PlayerPosition(initialWidth, initialHeight, CELL_SIZE, PADDING);
 
                 initialHeight += 1;
 
@@ -45,9 +43,11 @@ public class PlayerGrid {
     public void start() {
         snakeList = new ArrayList<>();
         fillWall();
-        Snake snake1 = new Snake("S1", this, positions[20][30], positions[20][31], positions[20][32], Color.BLUE);
+        Snake snake1 = new Snake(this, positions[20][30], positions[20][31],
+                positions[20][32], Color.BLUE);
         snakeList.add(snake1);
-        Snake snake2 = new Snake("S2", this, positions[80][30], positions[80][31], positions[80][32], Color.PINK);
+        Snake snake2 = new Snake(this, positions[80][30], positions[80][31],
+                positions[80][32], Color.PINK);
         snakeList.add(snake2);
 
     }

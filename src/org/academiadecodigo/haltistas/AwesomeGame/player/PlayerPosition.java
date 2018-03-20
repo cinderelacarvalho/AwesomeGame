@@ -13,14 +13,13 @@ public class PlayerPosition {
     private Picture apple;
 
 
-    PlayerPosition(int row, int col) {
+    PlayerPosition(int row, int col,int CELL_SIZE, int PADDING) {
         this.row = row;
         this.col = col;
 
-        int PADDING = 10;
-        int CELLSIZE = 10;
-        rectangle = new Rectangle(row * CELLSIZE + PADDING, col * CELLSIZE + PADDING,
-                CELLSIZE, CELLSIZE);
+
+        rectangle = new Rectangle(row * CELL_SIZE + PADDING, col * CELL_SIZE + PADDING,
+                CELL_SIZE, CELL_SIZE);
 
     }
 
@@ -51,17 +50,10 @@ public class PlayerPosition {
         apple = new Picture(rectangle.getX(),rectangle.getY(),"resources/maça_verde.png");
         apple.draw();
 
-        /*
-        rectangle.setColor(Color.GREEN);
-        rectangle.fill(); */
     }
 
     public void paintRedApple() {
         apple = new Picture(rectangle.getX(),rectangle.getY(),"resources/maça.png");
         apple.draw();
-
-        /*
-        rectangle.setColor(Color.RED);
-        rectangle.fill(); */
     }
 }

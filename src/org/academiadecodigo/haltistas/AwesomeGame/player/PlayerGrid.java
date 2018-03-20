@@ -86,7 +86,7 @@ public class PlayerGrid {
     }
 
     public void deleteApple(int row, int col) {
-        positions[row][col].deletePos();
+        positions[row][col].deleteAp();
     }
 
     public void redApple(int row, int col) {

@@ -2,6 +2,7 @@ package org.academiadecodigo.haltistas.AwesomeGame.player;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
 public class PlayerPosition {
@@ -9,6 +10,7 @@ public class PlayerPosition {
     private Rectangle rectangle;
     private int row;
     private int col;
+    private Picture apple;
 
 
     PlayerPosition(int row, int col) {
@@ -40,13 +42,26 @@ public class PlayerPosition {
         rectangle.delete();
     }
 
+    public void deleteAp() {
+        apple.delete();
+
+    }
+
     public void paintGreenApple() {
+        apple = new Picture(rectangle.getX(),rectangle.getY(),"resources/maça_verde.png");
+        apple.draw();
+
+        /*
         rectangle.setColor(Color.GREEN);
-        rectangle.fill();
+        rectangle.fill(); */
     }
 
     public void paintRedApple() {
+        apple = new Picture(rectangle.getX(),rectangle.getY(),"resources/maça.png");
+        apple.draw();
+
+        /*
         rectangle.setColor(Color.RED);
-        rectangle.fill();
+        rectangle.fill(); */
     }
 }

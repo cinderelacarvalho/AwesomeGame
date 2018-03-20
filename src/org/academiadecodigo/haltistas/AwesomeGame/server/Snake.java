@@ -12,6 +12,7 @@ public class Snake {
     private String name;
     private boolean over;
     private Direction direction;
+    private boolean isEatingApple;
     private boolean isEatingGreen;
     private boolean isEatingRed;
     private ServerGrid serverGrid;
@@ -53,9 +54,6 @@ public class Snake {
 
     public String move() {
 
-        System.out.println("sanke position" + positionList.size());
-
-
         ServerPosition position = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
         String msg = "";
 
@@ -67,7 +65,7 @@ public class Snake {
                 positionList.add(0, position);
 
                 if (position.getRow() == ServerPosition.MIN_ROW) {
-                    over = true; // ver devolucao de snakes
+                    over = true;
                 }
 
                 msg = "move-" + name + "-u";
@@ -79,7 +77,7 @@ public class Snake {
                 positionList.add(0, position);
 
                 if (position.getRow() == ServerPosition.MAX_ROW) {
-                    over = true; // ....
+                    over = true;
                 }
 
                 msg = "move-" + name + "-d";
@@ -91,7 +89,7 @@ public class Snake {
                 positionList.add(0, position);
 
                 if (position.getColumn() == ServerPosition.MIN_COLUMN) {
-                    over = true; // ....
+                    over = true;
                 }
 
                 msg = "move-" + name + "-l";
@@ -103,7 +101,7 @@ public class Snake {
                 positionList.add(0, position);
 
                 if (position.getColumn() == ServerPosition.MAX_COLUMN) {
-                    over = true; //.......
+                    over = true;
                 }
 
                 msg = "move-" + name + "-r";
@@ -140,34 +138,40 @@ public class Snake {
 
     public boolean isEatingApple(Apple apple) {
 
+
         ServerPosition head = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
 
         if (apple.compare(head)) {
             AppleType type = apple.getType();
 
-            switch (type) {
+            switch(type) {
 
                 case RED:
                     isEatingRed = true;
+                    isEatingApple = true;
                     break;
 
                 case GREEN:
                     isEatingGreen = true;
+                    isEatingApple = true;
                     break;
 
                 default:
                     System.out.println("Apple colliding snake error");
             }
         }
-        return isEatingGreen = false;
+        return isEatingApple;
     }
 
+    public void setEatingAppleFalse() {
+        isEatingApple = false;
+    }
 
-    public void setGreenFalse() {
+    public void setIsEatingGreenFalse() {
         isEatingGreen = false;
     }
 
-    public void setRedFalse() {
+    public void setIsEatingRedFalse() {
         isEatingRed = false;
     }
 
@@ -177,6 +181,10 @@ public class Snake {
 
     public boolean getIsEatingRed() {
         return isEatingRed;
+    }
+
+    public boolean getIsEatingApple() {
+        return isEatingApple;
     }
 
     public String getName() {

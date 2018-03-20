@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class PlayerNetwork {
+public class PlayerNetwork implements Runnable {
 
     private Socket playerSocket;
     private PrintWriter toServer;
@@ -34,7 +34,6 @@ public class PlayerNetwork {
     }
 
 
-    // this method as 1 thread
     public void run() {
 
         while (playerSocket.isConnected()) {

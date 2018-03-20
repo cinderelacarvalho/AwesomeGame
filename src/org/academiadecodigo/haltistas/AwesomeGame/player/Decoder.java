@@ -5,33 +5,57 @@ public class Decoder {
 
     private PlayerGrid playerGrid;
 
-    public Decoder (PlayerGrid playerGrid) {
+    Decoder(PlayerGrid playerGrid) {
 
         this.playerGrid = playerGrid;
     }
 
 
     public void decoding(String msg) {
+        int snake = 0;
+        int row = 0;
+        int col = 0;
 
         String[] words = msg.split("-");
-        int x1 = Integer.parseInt(words[1]);
-        int y1 = Integer.parseInt(words[1]);
-        int x2 = Integer.parseInt(words[1]);
-        int y2 = Integer.parseInt(words[1]);
 
+        switch (words[0]) {
 
-        if (words [0].equals("start")) {
-             playerGrid.start(x1, y1, x2, y2);
-        }
-
-        if (words[0].equals("move")) {
+            case "start":
+                playerGrid.start();
+                break;
+            case "move":
+                snake = Integer.parseInt(words[1]);
+                playerGrid.move(snake, words[2]);
+                break;
+            case "deletewall":
+                playerGrid.deleteWall();
+                break;
+            case "deleteapple":
+                row = Integer.parseInt(words[1]);
+                col = Integer.parseInt(words[2]);
+                playerGrid.deleteApple(row, col);
+                break;
+            case "green":
+                row = Integer.parseInt(words[1]);
+                col = Integer.parseInt(words[2]);
+                playerGrid.greenApple(row, col);
+                break;
+            case "red":
+                row = Integer.parseInt(words[1]);
+                col = Integer.parseInt(words[2]);
+                playerGrid.redApple(row, col);
+                break;
+            case "delete":
+                snake = Integer.parseInt(words[1]);
+                playerGrid.deleteSnake(snake);
+                break;
+            case "gameover":
+                playerGrid.gameOver(words[1]);
+                break;
 
         }
     }
-
-
-
-
-
 }
+
+
 

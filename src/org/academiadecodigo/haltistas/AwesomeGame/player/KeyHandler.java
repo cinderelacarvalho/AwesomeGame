@@ -34,6 +34,11 @@ public class KeyHandler implements KeyboardHandler {
         keyboardEvent.setKey(KeyboardEvent.KEY_RIGHT);
         keyboardEvent.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(keyboardEvent);
+
+        keyboardEvent = new KeyboardEvent();
+        keyboardEvent.setKey(KeyboardEvent.KEY_R);
+        keyboardEvent.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(keyboardEvent);
     }
 
 
@@ -62,6 +67,11 @@ public class KeyHandler implements KeyboardHandler {
                 System.out.println("right");
                 player.sendMsg("right");
                 break;
+            case KeyboardEvent.KEY_R:
+                System.out.println("restart");
+                player.sendMsg("restart");
+                break;
+
         }
     }
 

@@ -133,7 +133,9 @@ public class Snake {
         ServerPosition head = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
 
         for (ServerPosition position : snake.positionList) {
+
             if (head.equals(position)) {
+                System.out.println("HIIIIIIIT");
                 over = true;
             }
         }

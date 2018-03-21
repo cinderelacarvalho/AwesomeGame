@@ -10,38 +10,32 @@ public class ServerPosition {
     private int column;
     private int row;
 
-    public ServerPosition (int column, int row) {
+    public ServerPosition(int column, int row) {
 
         this.column = column;
         this.row = row;
     }
 
     public void moveUP() {
-        row --;
+        row--;
     }
 
     public void moveDown() {
-        row ++;
+        row++;
     }
 
     public void moveLeft() {
-        column --;
+        column--;
     }
 
     public void moveRight() {
-        column ++;
+        column++;
     }
 
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean equals(ServerPosition o) {
 
-        if(o instanceof ServerPosition) {
-
-            ServerPosition p = (ServerPosition) o;
-            return p.column == this.column && p.row == this.row;
-        }
-        return false;
+        return o.column == this.column && o.row == this.row;
     }
 
 
@@ -51,5 +45,13 @@ public class ServerPosition {
 
     public int getRow() {
         return row;
+    }
+
+    @Override
+    public String toString() {
+        return "ServerPosition{" +
+                "column=" + column +
+                ", row=" + row +
+                '}';
     }
 }

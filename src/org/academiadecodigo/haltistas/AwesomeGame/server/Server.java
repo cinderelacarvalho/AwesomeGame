@@ -10,7 +10,6 @@ import java.util.concurrent.Executors;
 public class Server {
 
     private ServerSocket serverSocket;
-    private Socket clientSocket;
     private ExecutorService executorService;
     private ArrayList<ServerHelper> serverHelpers;
     private ServerGrid serverGrid;
@@ -42,9 +41,9 @@ public class Server {
 
             try {
                 System.out.println("Waiting for connection");
-                clientSocket = serverSocket.accept();
+                Socket clientSocket = serverSocket.accept();
 
-                ServerHelper helper = new ServerHelper(name,clientSocket, this);
+                ServerHelper helper = new ServerHelper(name, clientSocket, this);
                 name++;
 
                 executorService.submit(helper);

@@ -3,10 +3,7 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.Apple;
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.AppleFactory;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class ServerGrid implements Runnable {
 
@@ -114,7 +111,10 @@ public class ServerGrid implements Runnable {
 
     private void checkEatingApple(LinkedList<Apple> applesList) {
 
-        for (Apple apple : applesList) {  //TODO verificar se o metodo fuciona
+        Iterator<Apple> iterator = applesList.iterator();
+
+        while (iterator.hasNext()) {
+            Apple apple = iterator.next();
 
             snake1.isEatingApple(apple);
             snake2.isEatingApple(apple);
@@ -125,7 +125,7 @@ public class ServerGrid implements Runnable {
                 int row = apple.getPosition().getRow();
 
                 server.broadcast("deleteapple-" + row + "-" + col);
-                applesList.remove(apple);
+                iterator.remove();
                 snake1.setEatingAppleFalse();
                 snake2.setEatingAppleFalse();
             }

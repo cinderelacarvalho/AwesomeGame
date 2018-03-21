@@ -41,11 +41,11 @@ public class Snake {
             direction = Direction.DOWN;
         }
 
-        if (msg.equals("left") && (direction.equals(Direction.UP)) || direction.equals(Direction.DOWN)) {
+        if (msg.equals("left") && (direction.equals(Direction.UP) || direction.equals(Direction.DOWN))) {
             direction = Direction.LEFT;
         }
 
-        if (msg.equals("right") && (direction.equals(Direction.UP)) || direction.equals(Direction.DOWN)) {
+        if (msg.equals("right") && (direction.equals(Direction.UP) || direction.equals(Direction.DOWN))) {
             direction = Direction.RIGHT;
         }
         direction = direction;

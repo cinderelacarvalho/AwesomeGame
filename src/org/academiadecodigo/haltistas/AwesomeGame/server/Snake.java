@@ -173,6 +173,16 @@ public class Snake {
         return isEatingApple;
     }
 
+    public void restart () {
+
+        this.name = getName();
+        direction = Direction.UP;
+        positionList = new LinkedList<>();
+
+        positionList.clear();
+
+    }
+
     public boolean getIsEatingApple() {
         return isEatingApple;
     }

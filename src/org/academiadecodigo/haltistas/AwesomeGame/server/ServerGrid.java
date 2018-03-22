@@ -24,6 +24,7 @@ public class ServerGrid implements Runnable {
     int initialColSnake1 = 24;
     int initialColSnake2 = 75;
     int initialRowSnakes = 30;
+    int restarts = 0;
 
 
     public ServerGrid(Server server) {
@@ -80,11 +81,26 @@ public class ServerGrid implements Runnable {
         //if is player 1 do snake 1, player 2 do snake 2 setDirection
         String[] words = msg.split("-");
 
+        if (words[0].equals("gameover")) {
+            restarts++;
+            if (restarts == 2) {
+                restartMsg(words[1]);
+            }
+        }
+
         int numSnake = Integer.parseInt(words[0]);
 
         snakeList.get(numSnake).setDirection(words[1]);
 
 
+    }
+
+    public void restartMsg(String msg) {
+        applesList.clear();
+        snake1.restart();
+        snake2.restart();
+        server.broadcast(msg);
+        System.out.println("match restart");
     }
 
     //começa as movimentações.
@@ -130,7 +146,7 @@ public class ServerGrid implements Runnable {
             }
         }
 
-        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 2000);
+        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 20); // TODO: 2000
 
 
     }

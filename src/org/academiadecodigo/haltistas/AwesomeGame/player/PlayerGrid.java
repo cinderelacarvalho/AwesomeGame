@@ -114,8 +114,6 @@ public class PlayerGrid {
     }
 
     public void gameOver(String player) {
-        Picture pictureGameOver = new Picture(PADDING, PADDING, "resources/Game_Over.jpg");
-        pictureGameOver.draw();
 
         try {
             Thread.sleep(3000);
@@ -124,18 +122,18 @@ public class PlayerGrid {
         }
 
         switch (player) {
-            case "p1":
+            case "0":
                 Picture picturePlayer2 = new Picture(PADDING, PADDING, "resources/player_2_wins.jpg");
                 picturePlayer2.draw();
                 break;
-            case "p2":
+            case "1":
                 Picture picturePlayer1 = new Picture(PADDING, PADDING, "resources/player_1_wins.jpg");
                 picturePlayer1.draw();
                 break;
         }
     }
 
-
+    //TODO apagar??????????????
     @Override
     public String toString() {
         return "PlayerGrid{" +

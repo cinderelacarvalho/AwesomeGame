@@ -4,19 +4,20 @@ import org.academiadecodigo.haltistas.AwesomeGame.server.apple.Apple;
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.AppleType;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class Snake {
 
     //TODO um hash map para a lista de macas.. as posicoes sao a key
 
-    private LinkedList<ServerPosition> positionList;
+    public LinkedList<ServerPosition> positionList;
     private String name;
-    private boolean over;
+    private volatile boolean over;
     private Direction direction;
     private boolean isEatingApple;
     private boolean isEatingGreen;
     private boolean isEatingRed;
+    private int maxCol;
+    private int minCol;
 
 
     public Snake(String name, ServerPosition initial1, ServerPosition initial2, ServerPosition initial3) {
@@ -88,7 +89,7 @@ public class Snake {
                 position.moveLeft();
                 positionList.add(0, position);
 
-                if (position.getColumn() == ServerPosition.MIN_COLUMN) {
+                if (position.getColumn() == minCol) {
                     setOver();
                 }
 
@@ -100,7 +101,7 @@ public class Snake {
                 position.moveRight();
                 positionList.add(0, position);
 
-                if (position.getColumn() == ServerPosition.MAX_COLUMN) {
+                if (position.getColumn() == maxCol) {
                     setOver();
                 }
 
@@ -119,8 +120,11 @@ public class Snake {
 
     public String deleteLast() {
 
-        System.out.println(positionList.size());
         positionList.remove(positionList.size() - 1);
+
+        if (positionList.size() == 0) {
+            setOver();
+        }
 
         String delete = "delete" + "-" + name;
         return delete;
@@ -128,12 +132,15 @@ public class Snake {
 
     public void checkCollision(Snake snake) {
 
+        if (over) {
+            return;
+        }
+
         ServerPosition head = positionList.get(0);
 
         for (ServerPosition position : snake.positionList) {
 
             if (head.equals(position)) {
-                System.out.println("HIIIIIIIT");
                 setOver();
 
             }
@@ -144,24 +151,18 @@ public class Snake {
     public boolean isEatingApple(Apple apple) {
 
 
-
         if (apple.compare(positionList.peek())) {
-            System.out.println("A verificar se entra no compare..............");
             AppleType type = apple.getType();
 
             switch (type) {
 
                 case RED:
                     isEatingRed = true;
-
-                    System.out.println("snake is eating red apple............" + getIsEatingRed());
                     isEatingApple = true;
                     break;
 
                 case GREEN:
                     isEatingGreen = true;
-
-                    System.out.println("snake is eating red apple............" + getIsEatingGreen());
                     isEatingApple = true;
                     break;
 
@@ -184,6 +185,7 @@ public class Snake {
     public boolean getIsEatingGreen() {
         return isEatingGreen;
     }
+
     public void setIsEatingGreenFalse() {
         isEatingGreen = false;
     }
@@ -191,8 +193,17 @@ public class Snake {
     public boolean getIsEatingRed() {
         return isEatingRed;
     }
+
     public void setIsEatingRedFalse() {
         isEatingRed = false;
+    }
+
+    public void setMinCol(int minCol) {
+        this.minCol = minCol;
+    }
+
+    public void setMaxCol(int maxCol) {
+        this.maxCol = maxCol;
     }
 
     public String getName() {

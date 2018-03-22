@@ -107,13 +107,15 @@ public class PlayerGrid {
         wall.delete();
     }
 
+
     public void gameOver(String player) {
+
         pictureRestart = new Picture(0, 0, "resources/restart.png");
 
         try {
 
             switch (player) {
-                case "p1":
+                case "0":
                     Picture picturePlayer2 = new Picture(PADDING, PADDING, "resources/player_2_wins.jpg");
                     picturePlayer2.draw();
                     canvas.delete();
@@ -125,7 +127,7 @@ public class PlayerGrid {
                     pictureRestart.draw();
 
                     break;
-                case "p2":
+                case "1":
                     Picture picturePlayer1 = new Picture(PADDING, PADDING, "resources/player_1_wins.jpg");
                     picturePlayer1.draw();
                     canvas.delete();
@@ -153,6 +155,7 @@ public class PlayerGrid {
                     positions[i][j].deleteAp();
                 }
             }
+
         }
 
         positions = null;
@@ -162,7 +165,7 @@ public class PlayerGrid {
         init();
     }
 
-
+    //TODO apagar??????????????
     @Override
     public String toString() {
         return "PlayerGrid{" +

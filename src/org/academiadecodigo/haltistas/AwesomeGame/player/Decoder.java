@@ -51,7 +51,7 @@ public class Decoder {
                 snake = Integer.parseInt(words[1]);
                 playerGrid.deleteSnake(snake);
                 break;
-            case "gameover":
+            case "over":
                 playerGrid.gameOver(words[1]);
                 break;
             case "restart":

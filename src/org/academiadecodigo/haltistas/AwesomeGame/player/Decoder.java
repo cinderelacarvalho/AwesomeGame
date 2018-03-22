@@ -55,6 +55,8 @@ public class Decoder {
             case "gameover":
                 playerGrid.gameOver(words[1]);
                 break;
+            case "shrink":
+                playerGrid.shrink();
 
         }
     }

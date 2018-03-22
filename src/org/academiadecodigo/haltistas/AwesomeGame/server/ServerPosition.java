@@ -2,10 +2,16 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 
 public class ServerPosition {
 
-    public static final int MIN_COLUMN = 0;
+    public static int MIN_COLUMN = 0; // TODO: to shrink we need to change these values
     public static final int MAX_COLUMN = 99;
-    public static final int MIN_ROW = 0;
+    public static int MIN_ROW = 0;
     public static final int MAX_ROW = 59;
+
+    public static synchronized void shrink() {
+        System.err.println("\t\t\t\t\t SHRINK BOY");
+        MIN_ROW++;
+        MIN_COLUMN++;
+    }
 
     private int column;
     private int row;

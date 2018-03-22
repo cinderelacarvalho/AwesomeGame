@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 public class PlayerGrid {
 
+    private Picture background;
     private final int CELL_SIZE = 10;
     private final int PADDING = 10;
     private final int ROWS = 60;
@@ -18,10 +19,12 @@ public class PlayerGrid {
     private final int wallPos2 = 50;
 
     private PlayerPosition[][] positions;
+
     private ArrayList<Snake> snakeList;
 
     public void init() {
-        new Picture(0, 0, "resources/sand.jpg").draw();
+        background = new Picture(0, 0, "resources/sand.jpg");
+        background.draw();
         new Rectangle(PADDING, PADDING, COLS * CELL_SIZE, ROWS * CELL_SIZE).draw();
 
 
@@ -45,6 +48,7 @@ public class PlayerGrid {
     }
 
     public void start() {
+
         fillWall();
 
     }
@@ -145,6 +149,29 @@ public class PlayerGrid {
                 "positions=" + Arrays.toString(positions) +
                 ", snakeList=" + snakeList +
                 '}';
+    }
+
+    public void shrink() {
+
+        int cols = positions.length;
+        int rows = positions[0].length;
+
+
+        PlayerPosition[][] newPositions = new PlayerPosition[cols - 1][rows - 1];
+
+        for (int i = 0; i < cols - 1; i++) {
+            for (int j = 0; j < rows - 1; j++) {
+
+                newPositions[i][j] = positions[i][j];
+            }
+        }
+
+        int resize = 5;
+
+        positions = newPositions;
+        background.translate(resize, resize);
+        background.grow(-resize, -resize);
+
     }
 }
 

@@ -72,4 +72,8 @@ public class PlayerPosition {
     public String toString() {
         return apple != null ? "col: " + col + " row: " + row : " ";
     }
+
+    public boolean isApple() {
+        return apple != null;
+    }
 }

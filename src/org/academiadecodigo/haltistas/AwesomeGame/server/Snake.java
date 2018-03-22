@@ -56,65 +56,66 @@ public class Snake {
 
         ServerPosition position = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
         String msg = "";
+        synchronized (ServerPosition.class) {
+            switch (direction) {
 
-        switch (direction) {
+                case UP:
 
-            case UP:
+                    position.moveUP();
+                    positionList.add(0, position);
 
-                position.moveUP();
-                positionList.add(0, position);
+                    if (position.getRow() == ServerPosition.MIN_ROW) {
+                        setOver();
+                    }
 
-                if (position.getRow() == ServerPosition.MIN_ROW) {
-                    setOver();
-                }
+                    msg = "move-" + name + "-u";
+                    break;
 
-                msg = "move-" + name + "-u";
-                break;
+                case DOWN:
 
-            case DOWN:
+                    position.moveDown();
+                    positionList.add(0, position);
 
-                position.moveDown();
-                positionList.add(0, position);
+                    if (position.getRow() == ServerPosition.MAX_ROW) {
+                        setOver();
+                    }
 
-                if (position.getRow() == ServerPosition.MAX_ROW) {
-                    setOver();
-                }
+                    msg = "move-" + name + "-d";
+                    break;
 
-                msg = "move-" + name + "-d";
-                break;
+                case LEFT:
 
-            case LEFT:
+                    position.moveLeft();
+                    positionList.add(0, position);
 
-                position.moveLeft();
-                positionList.add(0, position);
+                    if (position.getColumn() == ServerPosition.MIN_COLUMN) {
+                        setOver();
+                    }
 
-                if (position.getColumn() == ServerPosition.MIN_COLUMN) {
-                    setOver();
-                }
+                    msg = "move-" + name + "-l";
+                    break;
 
-                msg = "move-" + name + "-l";
-                break;
+                case RIGHT:
 
-            case RIGHT:
+                    position.moveRight();
+                    positionList.add(0, position);
 
-                position.moveRight();
-                positionList.add(0, position);
+                    if (position.getColumn() == ServerPosition.MAX_COLUMN) {
+                        setOver();
+                    }
 
-                if (position.getColumn() == ServerPosition.MAX_COLUMN) {
-                    setOver();
-                }
+                    msg = "move-" + name + "-r";
+                    break;
 
-                msg = "move-" + name + "-r";
-                break;
+                default:
 
-            default:
+                    System.out.println("WTF!");
+                    break;
 
-                System.out.println("WTF!");
-                break;
-
+            }
+            System.out.println("MSG in move: " + msg);
+            return msg;
         }
-        System.out.println("MSG in move: " + msg);
-        return msg;
     }
 
     public String deleteLast() {
@@ -142,7 +143,6 @@ public class Snake {
     }
 
     public boolean isEatingApple(Apple apple) {
-
 
 
         if (apple.compare(positionList.peek())) {
@@ -173,7 +173,7 @@ public class Snake {
         return isEatingApple;
     }
 
-    public void restart () {
+    public void restart() {
 
         this.name = getName();
         direction = Direction.UP;
@@ -194,6 +194,7 @@ public class Snake {
     public boolean getIsEatingGreen() {
         return isEatingGreen;
     }
+
     public void setIsEatingGreenFalse() {
         isEatingGreen = false;
     }
@@ -201,6 +202,7 @@ public class Snake {
     public boolean getIsEatingRed() {
         return isEatingRed;
     }
+
     public void setIsEatingRedFalse() {
         isEatingRed = false;
     }

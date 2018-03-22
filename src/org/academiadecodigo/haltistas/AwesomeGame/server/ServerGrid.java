@@ -12,7 +12,7 @@ public class ServerGrid implements Runnable {
     private Server server;
     private boolean over;
     private Timer timer;
-
+    private Timer shrink;
     private AppleFactory appleFactory;
     private LinkedList<Apple> applesList;
     private static final int INITIAL_APPLES = 40;
@@ -27,12 +27,14 @@ public class ServerGrid implements Runnable {
     int restarts = 0;
 
 
+
     public ServerGrid(Server server) {
 
         this.server = server;
         applesList = new LinkedList<>();
         appleFactory = new AppleFactory();
         timer = new Timer();
+        shrink = new Timer();
 
     }
 
@@ -44,6 +46,7 @@ public class ServerGrid implements Runnable {
 
     //Método que envia a mensagem de start para cada um dos players.
     public void init() {
+
 
 
         synchronized (this) {
@@ -71,6 +74,7 @@ public class ServerGrid implements Runnable {
 
         getNewApple(INITIAL_APPLES);
 
+        timer.scheduleAtFixedRate(new Shrinker(),5000, 5000);
         start();
 
     }
@@ -146,7 +150,7 @@ public class ServerGrid implements Runnable {
             }
         }
 
-        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 20); // TODO: 2000
+        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 1000); // TODO: 2000
 
 
     }
@@ -261,5 +265,15 @@ public class ServerGrid implements Runnable {
                 "applesList=" + applesList +
                 ", snakeList=" + snakeList +
                 '}';
+    }
+
+    private class Shrinker extends TimerTask {
+
+        @Override
+        public void run() {
+
+            ServerPosition.shrink();
+            server.broadcast("shrink");
+        }
     }
 }

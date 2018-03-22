@@ -13,12 +13,12 @@ public class PlayerPosition {
     private Picture apple;
 
 
-    PlayerPosition(int row, int col,int CELL_SIZE, int PADDING) {
-        this.row = row;
+    PlayerPosition(int col, int row,int CELL_SIZE, int PADDING) {
         this.col = col;
+        this.row = row;
 
 
-        rectangle = new Rectangle(row * CELL_SIZE + PADDING, col * CELL_SIZE + PADDING,
+        rectangle = new Rectangle(col * CELL_SIZE + PADDING, row * CELL_SIZE + PADDING,
                 CELL_SIZE, CELL_SIZE);
 
     }
@@ -43,17 +43,33 @@ public class PlayerPosition {
 
     public void deleteAp() {
         apple.delete();
+        apple = null;
 
     }
 
     public void paintGreenApple() {
+
+        if (apple != null) {
+            return;
+        }
+
         apple = new Picture(rectangle.getX(),rectangle.getY(),"resources/maça_verde.png");
         apple.draw();
 
     }
 
     public void paintRedApple() {
+
+        if (apple != null) {
+            return;
+        }
+
         apple = new Picture(rectangle.getX(),rectangle.getY(),"resources/maça.png");
         apple.draw();
+    }
+
+    @Override
+    public String toString() {
+        return apple != null ? "col: " + col + " row: " + row : " ";
     }
 }

@@ -5,45 +5,42 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class PlayerGrid {
 
     private final int CELL_SIZE = 10;
     private final int PADDING = 10;
-    private final int ROWS = 100;
-    private final int COLS = 60;
+    private final int ROWS = 60;
+    private final int COLS = 100;
     private final int wallPos1 = 49;
     private final int wallPos2 = 50;
 
     private PlayerPosition[][] positions;
-    private int initialWidth = 0;
-    private int initialHeight = 0;
     private ArrayList<Snake> snakeList;
 
     public void init() {
         new Picture(0, 0, "resources/sand.jpg").draw();
-        new Rectangle(PADDING, PADDING, ROWS * CELL_SIZE, COLS * CELL_SIZE).draw();
+        new Rectangle(PADDING, PADDING, COLS * CELL_SIZE, ROWS * CELL_SIZE).draw();
 
 
-        positions = new PlayerPosition[ROWS][COLS];
+        positions = new PlayerPosition[COLS][ROWS];
+        int initialColSnake1 = 24;
+        int initialColSnake2 = 75;
+        int initialRowSnakes = 30;
 
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLS; j++) {
-                positions[i][j] = new PlayerPosition(initialWidth, initialHeight, CELL_SIZE, PADDING);
-
-                initialHeight += 1;
-
+        for (int col = 0; col < COLS; col++) {
+            for (int row = 0; row < ROWS; row++) {
+                positions[col][row] = new PlayerPosition(col, row, CELL_SIZE, PADDING);
             }
-            initialHeight = 0;
-            initialWidth += 1;
         }
         snakeList = new ArrayList<>();
-        Snake snake1 = new Snake(this, positions[20][30], positions[20][31],
-                positions[20][32], Color.BLUE);
+        Snake snake1 = new Snake(this, positions[initialColSnake1][initialRowSnakes], positions[initialColSnake1][initialRowSnakes + 1],
+                positions[initialColSnake1][initialRowSnakes + 2], Color.BLUE);
         snakeList.add(snake1);
-        Snake snake2 = new Snake(this, positions[80][30], positions[80][31],
-                positions[80][32], Color.PINK);
+        Snake snake2 = new Snake(this, positions[initialColSnake2][initialRowSnakes], positions[initialColSnake2][initialRowSnakes + 1],
+                positions[initialColSnake2][initialRowSnakes + 2], Color.PINK);
         snakeList.add(snake2);
     }
 
@@ -52,8 +49,8 @@ public class PlayerGrid {
 
     }
 
-    public PlayerPosition getPos(int row, int col) {
-        return positions[row][col];
+    public PlayerPosition getPos(int col, int row) {
+        return positions[col][row];
     }
 
     public void move(int snake, String dir) {
@@ -82,20 +79,21 @@ public class PlayerGrid {
     }
 
     public void greenApple(int row, int col) {
-        positions[row][col].paintGreenApple();
+        positions[col][row].paintGreenApple();
     }
 
     public void deleteApple(int row, int col) {
-        positions[row][col].deleteAp();
+        System.out.println(positions[col][row]);
+        positions[col][row].deleteAp();
     }
 
     public void redApple(int row, int col) {
-        positions[row][col].paintRedApple();
+        positions[col][row].paintRedApple();
     }
 
     private void fillWall() {
         int i = 0;
-        while (i < COLS) {
+        while (i < ROWS) {
 
             positions[wallPos1][i].paintPos(Color.GRAY);
             positions[wallPos2][i].paintPos(Color.GRAY);
@@ -107,7 +105,7 @@ public class PlayerGrid {
     public void deleteWall() {
         int i = 0;
 
-        while (i < COLS) {
+        while (i < ROWS) {
             positions[wallPos1][i].deletePos();
             positions[wallPos2][i].deletePos();
             i++;
@@ -135,6 +133,15 @@ public class PlayerGrid {
                 picturePlayer1.draw();
                 break;
         }
+    }
+
+
+    @Override
+    public String toString() {
+        return "PlayerGrid{" +
+                "positions=" + Arrays.toString(positions) +
+                ", snakeList=" + snakeList +
+                '}';
     }
 }
 

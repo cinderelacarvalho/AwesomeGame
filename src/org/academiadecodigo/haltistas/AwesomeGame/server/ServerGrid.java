@@ -2,6 +2,7 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.Apple;
 import org.academiadecodigo.haltistas.AwesomeGame.server.apple.AppleFactory;
+import org.academiadecodigo.haltistas.AwesomeGame.server.apple.AppleType;
 
 import java.util.*;
 
@@ -9,15 +10,20 @@ public class ServerGrid implements Runnable {
 
 
     private Server server;
-    private Snake snake1;
-    private Snake snake2;
     private boolean over;
+    private Timer timer;
+
     private AppleFactory appleFactory;
     private LinkedList<Apple> applesList;
     private static final int INITIAL_APPLES = 40;
-    private static final int ROUND_APPLES = 20;
-    private Timer timer;
+    private static final int ROUND_APPLES = 1;
+
     private ArrayList<Snake> snakeList;
+    private Snake snake1;
+    private Snake snake2;
+    int initialColSnake1 = 24;
+    int initialColSnake2 = 75;
+    int initialRowSnakes = 30;
 
 
     public ServerGrid(Server server) {
@@ -26,7 +32,9 @@ public class ServerGrid implements Runnable {
         applesList = new LinkedList<>();
         appleFactory = new AppleFactory();
         timer = new Timer();
+
     }
+
 
     @Override
     public void run() {
@@ -48,12 +56,14 @@ public class ServerGrid implements Runnable {
         }
         snakeList = new ArrayList<>();
 
-        snake1 = new Snake("0", new ServerPosition(20, 30), new ServerPosition(20, 31),
-                new ServerPosition(20, 32));
+        snake1 = new Snake("0", new ServerPosition(initialColSnake1, initialRowSnakes),
+                new ServerPosition(initialColSnake1, initialRowSnakes + 1),
+                new ServerPosition(initialColSnake1, initialRowSnakes + 2));
         snakeList.add(snake1);
 
-        snake2 = new Snake("1", new ServerPosition(80, 30), new ServerPosition(80, 31),
-                new ServerPosition(80, 32));
+        snake2 = new Snake("1", new ServerPosition(initialColSnake2, initialRowSnakes),
+                new ServerPosition(initialColSnake2, initialRowSnakes + 1),
+                new ServerPosition(initialColSnake2, initialRowSnakes + 2));
         snakeList.add(snake2);
 
         server.broadcast("start");
@@ -85,6 +95,7 @@ public class ServerGrid implements Runnable {
             @Override
             public void run() {
 
+                System.out.println(applesList);
                 // verifica se está a comer maçãs e qual
                 checkEatingApple(applesList);
 
@@ -101,22 +112,25 @@ public class ServerGrid implements Runnable {
                 snake1.checkCollision(snake2);
                 snake2.checkCollision(snake1);
 
-                getNewApple(ROUND_APPLES);
+                if (applesList.size() < 10) {
+                    getNewApple(ROUND_APPLES);
+                }
 
                 if (snake1.getIsOver()) {
                     setOver(snake1);
                 }
+
                 if (snake2.getIsOver()) {
                     setOver(snake2);
                 }
 
-                /*if (over) {
-                    return;
-                }*/
+                if (over) {
+                    timer.cancel();
+                }
             }
         }
 
-        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 1000);
+        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 2000);
 
 
     }
@@ -125,15 +139,13 @@ public class ServerGrid implements Runnable {
 
         Iterator<Apple> iterator = applesList.iterator();
 
+        System.out.println(snake1);
         while (iterator.hasNext()) {
             Apple apple = iterator.next();
+            System.out.println(apple);
 
             snake1.isEatingApple(apple);
-
-            System.out.println(snake1.getIsEatingApple() + "::::::::::::::::::::::::::::::");
             snake2.isEatingApple(apple);
-
-            System.out.println(snake2.getIsEatingApple() + "...................................");
 
             if (snake1.getIsEatingApple() || snake2.getIsEatingApple()) {
 
@@ -144,7 +156,6 @@ public class ServerGrid implements Runnable {
 
                 server.broadcast("deleteapple-" + row + "-" + col);
 
-                System.out.println("deleteapple-" + row + "-" + col); //////////////////////////////////////////////////////////////////////////////////
                 iterator.remove();
                 snake1.setEatingAppleFalse();
                 snake2.setEatingAppleFalse();
@@ -160,10 +171,8 @@ public class ServerGrid implements Runnable {
 
             System.out.println("eu estou a comer uma maca verde..........................");
 
-            System.out.println(snake.getIsEatingGreen()); /////////////////
 
             server.broadcast(snake.move());
-            System.out.println(snake.move()); ///////////////////////////////////////
             snake.setIsEatingGreenFalse();
         }
     }
@@ -172,12 +181,10 @@ public class ServerGrid implements Runnable {
 
         if (!snake.getIsEatingGreen() && !snake.getIsEatingRed()) {
 
-            System.out.println("estou aqui"); //////////////////////
+            System.out.println("estou a mover normalmente................."); //////////////////////
 
             server.broadcast(snake.move());
-            System.out.println(snake.move()); ////////////////////
             server.broadcast(snake.deleteLast());
-            System.out.println(snake.deleteLast()); /////////////////////////
         }
     }
 
@@ -190,11 +197,8 @@ public class ServerGrid implements Runnable {
             System.out.println(snake.getIsEatingRed()); ////////////////////////
 
             server.broadcast(snake.move());
-            System.out.println(snake.move()); ////////////////////
             server.broadcast(snake.deleteLast());
-            System.out.println(snake.deleteLast()); /////////////////////////
             server.broadcast(snake.deleteLast());
-            System.out.println(snake.deleteLast()); /////////////////////////
             snake.setIsEatingRedFalse();
         }
 
@@ -202,20 +206,44 @@ public class ServerGrid implements Runnable {
 
     private void getNewApple(int number) {
 
+
+        // TODO: 22/03/18 delete this afterwards ???? Jorge
+
+
         for (int i = 0; i < number; i++) {
 
-            applesList.add(appleFactory.getNewApple());
+            Apple apple = (appleFactory.getNewApple());
+
+            while (isOccupied(apple.getPosition())) {
+                apple = appleFactory.getNewApple();
+            }
+
+            applesList.add(apple);
             server.broadcast(applesList.getLast().toString());
 
         }
     }
 
+    private boolean isOccupied(ServerPosition position) {
+        for (Apple a : applesList) {
+            if (a.hasPosition(position)) {
+                return true;
+            }
+        }
+
+        return snake1.hasPosition(position) || snake2.hasPosition(position);
+    }
 
     public void setOver(Snake snake) {
         over = true;
         server.broadcast("gameover-" + snake.getName());
-        System.out.println(snake.getName() + ".........................over");
     }
 
-
+    @Override
+    public String toString() {
+        return "ServerGrid{" +
+                "applesList=" + applesList +
+                ", snakeList=" + snakeList +
+                '}';
+    }
 }

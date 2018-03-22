@@ -10,7 +10,7 @@ public class Snake {
 
     //TODO um hash map para a lista de macas.. as posicoes sao a key
 
-    private List<ServerPosition> positionList;
+    private LinkedList<ServerPosition> positionList;
     private String name;
     private boolean over;
     private Direction direction;
@@ -113,11 +113,13 @@ public class Snake {
                 break;
 
         }
+        System.out.println("MSG in move: " + msg);
         return msg;
     }
 
     public String deleteLast() {
 
+        System.out.println(positionList.size());
         positionList.remove(positionList.size() - 1);
 
         String delete = "delete" + "-" + name;
@@ -126,7 +128,7 @@ public class Snake {
 
     public void checkCollision(Snake snake) {
 
-        ServerPosition head = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
+        ServerPosition head = positionList.get(0);
 
         for (ServerPosition position : snake.positionList) {
 
@@ -142,9 +144,8 @@ public class Snake {
     public boolean isEatingApple(Apple apple) {
 
 
-        ServerPosition head = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
 
-        if (apple.compare(head)) {
+        if (apple.compare(positionList.peek())) {
             System.out.println("A verificar se entra no compare..............");
             AppleType type = apple.getType();
 
@@ -168,7 +169,6 @@ public class Snake {
                     System.out.println("Apple colliding snake error");
             }
         }
-
 
         return isEatingApple;
     }
@@ -208,5 +208,12 @@ public class Snake {
     }
 
 
+    @Override
+    public String toString() {
+        return "Snake{" + positionList.peek() + "}";
+    }
 
+    public boolean hasPosition(ServerPosition position) {
+        return positionList.contains(position); //TODO may have to iterate over list
+    }
 }

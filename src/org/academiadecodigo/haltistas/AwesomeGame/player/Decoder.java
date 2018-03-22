@@ -18,6 +18,8 @@ public class Decoder {
 
         String[] words = msg.split("-");
 
+        System.out.println(msg);
+
         switch (words[0]) {
 
             case "start":
@@ -33,6 +35,7 @@ public class Decoder {
             case "deleteapple":
                 row = Integer.parseInt(words[1]);
                 col = Integer.parseInt(words[2]);
+                System.out.println("\n\n\n\n\nclient received a: " + msg);
                 playerGrid.deleteApple(row, col);
                 break;
             case "green":

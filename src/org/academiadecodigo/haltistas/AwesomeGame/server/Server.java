@@ -73,6 +73,7 @@ public class Server {
 
             for (ServerHelper h : serverHelpers) {
 
+                System.out.println("\n\n\nMessage to Send: " + msg);
                 h.sendMsg(msg);
 
             }
@@ -80,7 +81,6 @@ public class Server {
     }
 
     public void receivedMsg(String msg) {
-        System.out.println(msg);
         serverGrid.receiveMsg(msg);
 
     }

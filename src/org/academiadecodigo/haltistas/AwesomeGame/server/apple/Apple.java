@@ -46,4 +46,8 @@ public class Apple {
 
         return Objects.hash(position, type);
     }
+
+    public boolean hasPosition(ServerPosition position) {
+        return this.position.equals(position);
+    }
 }

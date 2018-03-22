@@ -3,9 +3,9 @@ package org.academiadecodigo.haltistas.AwesomeGame.server;
 public class ServerPosition {
 
     public static final int MIN_COLUMN = 0;
-    public static final int MAX_COLUMN = 59;
+    public static final int MAX_COLUMN = 99;
     public static final int MIN_ROW = 0;
-    public static final int MAX_ROW = 99;
+    public static final int MAX_ROW = 59;
 
     private int column;
     private int row;
@@ -33,9 +33,15 @@ public class ServerPosition {
     }
 
 
-    public boolean equals(ServerPosition o) {
+    @Override
+    public boolean equals(Object o) {
 
-        return o.column == this.column && o.row == this.row;
+        if (o instanceof ServerPosition) {
+            ServerPosition p = (ServerPosition) o;
+            return p.column == this.column && p.row == this.row;
+
+        }
+        return false;
     }
 
 

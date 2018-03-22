@@ -1,5 +1,6 @@
 package org.academiadecodigo.haltistas.AwesomeGame.player;
 
+import org.academiadecodigo.haltistas.AwesomeGame.utils.Sound;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
@@ -14,14 +15,23 @@ public class PlayerGrid {
     private final int PADDING = 10;
     private final int ROWS = 60;
     private final int COLS = 100;
-    private final int wallPos1 = 49;
-    private final int wallPos2 = 50;
+    private final int wallPos = 500;
 
+    private Sound sound;
     private PlayerPosition[][] positions;
     private ArrayList<Snake> snakeList;
 
+    private Picture pictureRestart;
+    private Picture canvas;
+    private Picture wall;
+
+
     public void init() {
-        new Picture(0, 0, "resources/sand.jpg").draw();
+        canvas = new Picture(0, 0, "resources/sand.jpg");
+        canvas.draw();
+        wall = new Picture(wallPos, PADDING, "resources/wall.jpg");
+       // sound = new Sound("");
+
         new Rectangle(PADDING, PADDING, COLS * CELL_SIZE, ROWS * CELL_SIZE).draw();
 
 
@@ -45,7 +55,8 @@ public class PlayerGrid {
     }
 
     public void start() {
-        fillWall();
+        wall.draw();
+        // sound.loopIndef();
 
     }
 
@@ -91,48 +102,64 @@ public class PlayerGrid {
         positions[col][row].paintRedApple();
     }
 
-    private void fillWall() {
-        int i = 0;
-        while (i < ROWS) {
-
-            positions[wallPos1][i].paintPos(Color.GRAY);
-            positions[wallPos2][i].paintPos(Color.GRAY);
-            i++;
-
-        }
-    }
 
     public void deleteWall() {
-        int i = 0;
-
-        while (i < ROWS) {
-            positions[wallPos1][i].deletePos();
-            positions[wallPos2][i].deletePos();
-            i++;
-
-        }
+        wall.delete();
     }
 
     public void gameOver(String player) {
-        Picture pictureGameOver = new Picture(PADDING, PADDING, "resources/Game_Over.jpg");
-        pictureGameOver.draw();
+        pictureRestart = new Picture(0, 0, "resources/restart.png");
 
         try {
-            Thread.sleep(3000);
+
+            switch (player) {
+                case "p1":
+                    Picture picturePlayer2 = new Picture(PADDING, PADDING, "resources/player_2_wins.jpg");
+                    picturePlayer2.draw();
+                    canvas.delete();
+                    wall.delete();
+
+                    Thread.sleep(4000);
+
+                    picturePlayer2.delete();
+                    pictureRestart.draw();
+
+                    break;
+                case "p2":
+                    Picture picturePlayer1 = new Picture(PADDING, PADDING, "resources/player_1_wins.jpg");
+                    picturePlayer1.draw();
+                    canvas.delete();
+
+                    Thread.sleep(4000);
+
+                    picturePlayer1.delete();
+                    pictureRestart.draw();
+
+                    break;
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
 
-        switch (player) {
-            case "p1":
-                Picture picturePlayer2 = new Picture(PADDING, PADDING, "resources/player_2_wins.jpg");
-                picturePlayer2.draw();
-                break;
-            case "p2":
-                Picture picturePlayer1 = new Picture(PADDING, PADDING, "resources/player_1_wins.jpg");
-                picturePlayer1.draw();
-                break;
+
+    public void restart() {
+        for (int i = 0; i < COLS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+
+                positions[i][j].deletePos();
+
+                if (positions[i][j].isApple()) {
+                    positions[i][j].deleteAp();
+                }
+            }
         }
+
+        positions = null;
+        snakeList.clear();
+
+        pictureRestart.delete();
+        init();
     }
 
 

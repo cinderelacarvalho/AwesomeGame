@@ -35,7 +35,6 @@ public class Decoder {
             case "deleteapple":
                 row = Integer.parseInt(words[1]);
                 col = Integer.parseInt(words[2]);
-                System.out.println("\n\n\n\n\nclient received a: " + msg);
                 playerGrid.deleteApple(row, col);
                 break;
             case "green":
@@ -55,6 +54,8 @@ public class Decoder {
             case "gameover":
                 playerGrid.gameOver(words[1]);
                 break;
+            case "restart":
+                playerGrid.restart();
 
         }
     }

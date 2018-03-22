@@ -13,7 +13,7 @@ public class PlayerPosition {
     private Picture apple;
 
 
-    PlayerPosition(int col, int row,int CELL_SIZE, int PADDING) {
+    PlayerPosition(int col, int row, int CELL_SIZE, int PADDING) {
         this.col = col;
         this.row = row;
 
@@ -53,7 +53,7 @@ public class PlayerPosition {
             return;
         }
 
-        apple = new Picture(rectangle.getX(),rectangle.getY(),"resources/maça_verde.png");
+        apple = new Picture(rectangle.getX(), rectangle.getY(), "resources/maça_verde.png");
         apple.draw();
 
     }
@@ -64,9 +64,15 @@ public class PlayerPosition {
             return;
         }
 
-        apple = new Picture(rectangle.getX(),rectangle.getY(),"resources/maça.png");
+        apple = new Picture(rectangle.getX(), rectangle.getY(), "resources/maça.png");
         apple.draw();
     }
+
+
+    public boolean isApple() {
+        return apple != null;
+    }
+
 
     @Override
     public String toString() {

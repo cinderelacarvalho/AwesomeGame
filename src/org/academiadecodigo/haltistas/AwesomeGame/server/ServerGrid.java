@@ -130,7 +130,7 @@ public class ServerGrid implements Runnable {
             }
         }
 
-        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 2000);
+        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 500);
 
 
     }

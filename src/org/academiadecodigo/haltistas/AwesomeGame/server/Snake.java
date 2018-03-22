@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Snake {
 
+    //TODO um hash map para a lista de macas.. as posicoes sao a key
+
     private List<ServerPosition> positionList;
     private String name;
     private boolean over;
@@ -15,13 +17,11 @@ public class Snake {
     private boolean isEatingApple;
     private boolean isEatingGreen;
     private boolean isEatingRed;
-    private ServerGrid serverGrid;
 
 
-    public Snake(String name, ServerPosition initial1, ServerPosition initial2, ServerPosition initial3, ServerGrid serverGrid) {
+    public Snake(String name, ServerPosition initial1, ServerPosition initial2, ServerPosition initial3) {
 
         this.name = name;
-        this.serverGrid = serverGrid;
         direction = Direction.UP;
         positionList = new LinkedList<>();
 
@@ -48,7 +48,7 @@ public class Snake {
         if (msg.equals("right") && (direction.equals(Direction.UP) || direction.equals(Direction.DOWN))) {
             direction = Direction.RIGHT;
         }
-        direction = direction;
+
 
     }
 
@@ -65,8 +65,7 @@ public class Snake {
                 positionList.add(0, position);
 
                 if (position.getRow() == ServerPosition.MIN_ROW) {
-                    over = true;
-                    serverGrid.setOver();
+                    setOver();
                 }
 
                 msg = "move-" + name + "-u";
@@ -78,8 +77,7 @@ public class Snake {
                 positionList.add(0, position);
 
                 if (position.getRow() == ServerPosition.MAX_ROW) {
-                    over = true;
-                    serverGrid.setOver();
+                    setOver();
                 }
 
                 msg = "move-" + name + "-d";
@@ -91,8 +89,7 @@ public class Snake {
                 positionList.add(0, position);
 
                 if (position.getColumn() == ServerPosition.MIN_COLUMN) {
-                    over = true;
-                    serverGrid.setOver();
+                    setOver();
                 }
 
                 msg = "move-" + name + "-l";
@@ -104,8 +101,7 @@ public class Snake {
                 positionList.add(0, position);
 
                 if (position.getColumn() == ServerPosition.MAX_COLUMN) {
-                    over = true;
-                    serverGrid.setOver();
+                    setOver();
                 }
 
                 msg = "move-" + name + "-r";
@@ -136,7 +132,8 @@ public class Snake {
 
             if (head.equals(position)) {
                 System.out.println("HIIIIIIIT");
-                over = true;
+                setOver();
+
             }
         }
 
@@ -148,17 +145,22 @@ public class Snake {
         ServerPosition head = new ServerPosition(positionList.get(0).getColumn(), positionList.get(0).getRow());
 
         if (apple.compare(head)) {
+            System.out.println("A verificar se entra no compare..............");
             AppleType type = apple.getType();
 
-            switch(type) {
+            switch (type) {
 
                 case RED:
                     isEatingRed = true;
+
+                    System.out.println("snake is eating red apple............" + getIsEatingRed());
                     isEatingApple = true;
                     break;
 
                 case GREEN:
                     isEatingGreen = true;
+
+                    System.out.println("snake is eating red apple............" + getIsEatingGreen());
                     isEatingApple = true;
                     break;
 
@@ -166,6 +168,12 @@ public class Snake {
                     System.out.println("Apple colliding snake error");
             }
         }
+
+
+        return isEatingApple;
+    }
+
+    public boolean getIsEatingApple() {
         return isEatingApple;
     }
 
@@ -173,24 +181,18 @@ public class Snake {
         isEatingApple = false;
     }
 
-    public void setIsEatingGreenFalse() {
-        isEatingGreen = false;
-    }
-
-    public void setIsEatingRedFalse() {
-        isEatingRed = false;
-    }
-
     public boolean getIsEatingGreen() {
         return isEatingGreen;
+    }
+    public void setIsEatingGreenFalse() {
+        isEatingGreen = false;
     }
 
     public boolean getIsEatingRed() {
         return isEatingRed;
     }
-
-    public boolean getIsEatingApple() {
-        return isEatingApple;
+    public void setIsEatingRedFalse() {
+        isEatingRed = false;
     }
 
     public String getName() {
@@ -199,9 +201,10 @@ public class Snake {
 
     public void setOver() {
         over = true;
-        serverGrid.setOver();
-        serverGrid.setOver(name);
+    }
 
+    public boolean getIsOver() {
+        return over;
     }
 
 

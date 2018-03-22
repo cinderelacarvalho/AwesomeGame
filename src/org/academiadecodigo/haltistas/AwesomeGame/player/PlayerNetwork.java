@@ -40,7 +40,7 @@ public class PlayerNetwork implements Runnable {
 
             try {
                 String msgFromServer = fromServer.readLine();
-                System.out.println(msgFromServer);
+                //System.out.println(msgFromServer);/////////////
                 decoder.decoding(msgFromServer);
             } catch (IOException e) {
                 e.printStackTrace();

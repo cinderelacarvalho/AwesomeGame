@@ -36,6 +36,7 @@ public class ServerGrid implements Runnable {
         this.server = server;
         applesList = new LinkedList<>();
         appleFactory = new AppleFactory();
+        wallList = new LinkedList<>();
         timer = new Timer();
 
     }

@@ -30,7 +30,7 @@ public class PlayerGrid {
         canvas = new Picture(0, 0, "resources/sand.jpg");
         canvas.draw();
         wall = new Picture(wallPos, PADDING, "resources/wall.jpg");
-       // sound = new Sound("");
+        sound = new Sound("/resources/dj-snake.wav");
 
         new Rectangle(PADDING, PADDING, COLS * CELL_SIZE, ROWS * CELL_SIZE).draw();
 
@@ -56,7 +56,7 @@ public class PlayerGrid {
 
     public void start() {
         wall.draw();
-        // sound.loopIndef();
+        sound.loopIndef();
 
     }
 

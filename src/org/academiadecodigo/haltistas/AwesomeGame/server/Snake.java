@@ -116,6 +116,7 @@ public class Snake {
             System.out.println("MSG in move: " + msg);
             return msg;
         }
+
     }
 
     public String deleteLast() {

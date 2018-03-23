@@ -42,6 +42,10 @@ public class PlayerPosition {
     }
 
     public void deleteAp() {
+        if (apple == null) {
+            return;
+        }
+
         apple.delete();
         apple = null;
 

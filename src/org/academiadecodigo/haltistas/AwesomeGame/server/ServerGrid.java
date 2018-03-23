@@ -238,6 +238,7 @@ public class ServerGrid implements Runnable {
                 apple = appleFactory.getNewApple();
             }
 
+
             applesList.add(apple);
             server.broadcast(applesList.getLast().toString());
 
@@ -272,7 +273,26 @@ public class ServerGrid implements Runnable {
         @Override
         public void run() {
 
+            Iterator<Apple> iterator = applesList.iterator();
+
+            while (iterator.hasNext()) {
+                Apple a = iterator.next();
+
+                if ( a.getPosition().getColumn() == ServerPosition.MIN_COLUMN ||
+                        a.getPosition().getRow() == ServerPosition.MIN_ROW    ||
+                        a.getPosition().getColumn() == ServerPosition.MAX_COLUMN ||
+                        a.getPosition().getRow() == ServerPosition.MAX_ROW) {
+                    String message = "deleteapple-" + a.getPosition().getRow() + "-" + a.getPosition().getColumn();
+                    System.out.println(message);
+                    server.broadcast(message);
+                    iterator.remove();
+                }
+            }
+
+
+
             ServerPosition.shrink();
+
             server.broadcast("shrink");
         }
     }

@@ -11,6 +11,7 @@ import java.util.Arrays;
 public class PlayerGrid {
 
     private Picture background;
+    private Rectangle rectangle;
     private final int CELL_SIZE = 10;
     private final int PADDING = 10;
     private final int ROWS = 60;
@@ -25,7 +26,8 @@ public class PlayerGrid {
     public void init() {
         background = new Picture(0, 0, "resources/sand.jpg");
         background.draw();
-        new Rectangle(PADDING, PADDING, COLS * CELL_SIZE, ROWS * CELL_SIZE).draw();
+        rectangle = new Rectangle(PADDING, PADDING, COLS * CELL_SIZE, ROWS * CELL_SIZE);
+        rectangle.draw();
 
 
         positions = new PlayerPosition[COLS][ROWS];
@@ -54,7 +56,14 @@ public class PlayerGrid {
     }
 
     public PlayerPosition getPos(int col, int row) {
-        return positions[col][row];
+
+        if (col >= positions.length || row >= positions[0].length) {
+            return null;
+        }
+
+        synchronized (positions) {
+            return positions[col][row];
+        }
     }
 
     public void move(int snake, String dir) {
@@ -83,11 +92,15 @@ public class PlayerGrid {
     }
 
     public void greenApple(int row, int col) {
+
+        if (row >= ROWS || col >= COLS) {
+            return;
+        }
         positions[col][row].paintGreenApple();
     }
 
     public void deleteApple(int row, int col) {
-        System.out.println(positions[col][row]);
+
         positions[col][row].deleteAp();
     }
 
@@ -153,25 +166,30 @@ public class PlayerGrid {
 
     public void shrink() {
 
-        int cols = positions.length;
-        int rows = positions[0].length;
+        synchronized (positions) {
+
+            int cols = positions.length;
+            int rows = positions[0].length;
 
 
-        PlayerPosition[][] newPositions = new PlayerPosition[cols - 1][rows - 1];
+            PlayerPosition[][] newPositions = new PlayerPosition[cols - 1][rows - 1];
 
-        for (int i = 0; i < cols - 1; i++) {
-            for (int j = 0; j < rows - 1; j++) {
+            for (int i = 0; i < cols - 1; i++) {
+                for (int j = 0; j < rows - 1; j++) {
 
-                newPositions[i][j] = positions[i][j];
+                    newPositions[i][j] = positions[i][j];
+                }
             }
+
+            double resize = 5;
+
+            positions = newPositions;
+            background.grow(-resize, -resize);
+            background.translate(resize / 2, resize / 2);
+            rectangle.grow(-resize, -resize);
+            rectangle.translate(resize / 2, resize / 2);
+
         }
-
-        int resize = 5;
-
-        positions = newPositions;
-        background.translate(resize, resize);
-        background.grow(-resize, -resize);
-
     }
 }
 

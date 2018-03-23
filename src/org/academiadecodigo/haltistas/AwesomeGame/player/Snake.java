@@ -31,7 +31,10 @@ public class Snake {
     public void moveDown() {
 
         position = grid.getPos(snakePosition.get(0).getCol(), (snakePosition.get(0).getRow()) + 1);
-        move(position);
+
+        if (position != null) {
+            move(position);
+        }
 
     }
 
@@ -39,14 +42,18 @@ public class Snake {
     public void moveLeft() {
 
         position = grid.getPos((snakePosition.get(0).getCol()) - 1, snakePosition.get(0).getRow());
-        move(position);
+        if (position != null) {
+            move(position);
+        }
 
     }
 
     public void moveRight() {
 
         position = grid.getPos((snakePosition.get(0).getCol()) + 1, snakePosition.get(0).getRow());
-        move(position);
+        if (position != null) {
+            move(position);
+        }
 
     }
 
@@ -54,7 +61,9 @@ public class Snake {
     public void moveUp() {
 
         position = grid.getPos(snakePosition.get(0).getCol(), (snakePosition.get(0).getRow()) - 1);
-        move(position);
+        if (position != null) {
+            move(position);
+        }
     }
 
 

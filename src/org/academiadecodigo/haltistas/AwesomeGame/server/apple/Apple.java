@@ -41,7 +41,7 @@ public class Apple {
                 type == apple.type;
     }
 
-    @Override  // apagar????
+    @Override
     public int hashCode() {
 
         return Objects.hash(position, type);

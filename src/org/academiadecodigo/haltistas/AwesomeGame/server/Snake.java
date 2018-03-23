@@ -27,7 +27,6 @@ public class Snake {
         positionList.add(initial1);
         positionList.add(initial2);
         positionList.add(initial3);
-
     }
 
     public void setDirection(String msg) {
@@ -47,8 +46,6 @@ public class Snake {
         if (msg.equals("right") && (direction.equals(Direction.UP) || direction.equals(Direction.DOWN))) {
             direction = Direction.RIGHT;
         }
-
-
     }
 
     public String move() {
@@ -122,7 +119,6 @@ public class Snake {
         if (positionList.size() == 0) {
             setOver();
         }
-
         String delete = "delete" + "-" + name;
         return delete;
     }
@@ -142,7 +138,6 @@ public class Snake {
 
             }
         }
-
     }
 
     public boolean isEatingApple(Apple apple) {
@@ -167,7 +162,6 @@ public class Snake {
                     System.out.println("Apple colliding snake error");
             }
         }
-
         return isEatingApple;
     }
 
@@ -207,14 +201,13 @@ public class Snake {
         return name;
     }
 
-    public void setOver() {
+    private void setOver() {
         over = true;
     }
 
     public boolean getIsOver() {
         return over;
     }
-
 
     @Override
     public String toString() {

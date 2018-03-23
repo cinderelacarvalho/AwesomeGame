@@ -15,20 +15,20 @@ public class ServerGrid implements Runnable {
 
     private LinkedList<ServerPosition> wallList;
     private int wallClockCounter = 0;
-    private final int wallCol1 = 49;
-    private final int wallCol2 = 50;
 
     private AppleFactory appleFactory;
     private LinkedList<Apple> applesList;
     private static final int INITIAL_APPLES = 40;
     private static final int ROUND_APPLES = 1;
+    private final int wallCol1 = 49;
+    private final int wallCol2 = 50;
 
     private ArrayList<Snake> snakeList;
     private Snake snake1;
     private Snake snake2;
-    int initialColSnake1 = 24;
-    int initialColSnake2 = 75;
-    int initialRowSnakes = 30;
+    private int initialColSnake1 = 24;
+    private int initialColSnake2 = 75;
+    private int initialRowSnakes = 30;
 
 
     public ServerGrid(Server server) {
@@ -41,13 +41,12 @@ public class ServerGrid implements Runnable {
 
     }
 
-
     @Override
     public void run() {
         init();
     }
 
-    public void init() {
+    private void init() {
 
 
         synchronized (this) {
@@ -59,9 +58,7 @@ public class ServerGrid implements Runnable {
                 }
             }
         }
-
         prepare();
-
     }
 
     private void prepare() {
@@ -90,10 +87,8 @@ public class ServerGrid implements Runnable {
         getNewApple(INITIAL_APPLES);
 
         start();
-
     }
 
-    //recebe mensagem do server para alterar direcção
     public void receiveMsg(String msg) {
 
         if (over) {
@@ -102,18 +97,12 @@ public class ServerGrid implements Runnable {
             return;
         }
 
-        //if is player 1 do snake 1, player 2 do snake 2 setDirection
         String[] words = msg.split("-");
-
         int numSnake = Integer.parseInt(words[0]);
-
         snakeList.get(numSnake).setDirection(words[1]);
-
-
     }
 
-    //começa as movimentações.
-    public void start() {
+    private void start() {
 
 
         class MyVerySpecialTask extends TimerTask {
@@ -129,16 +118,12 @@ public class ServerGrid implements Runnable {
                     snake2.setMinCol(ServerPosition.MIN_COLUMN);
                 }
 
-
-                // verifica se está a comer maçãs e qual
                 checkEatingApple(applesList);
 
-                // lógica da movimentação da snake1 para as 3 situações
                 isSnakeEatingGreen(snake1);
                 isSnakeNotEating(snake1);
                 isSnakeEatingRed(snake1);
 
-                // lógica da movimentação da snake2 para as 3 situações
                 isSnakeEatingGreen(snake2);
                 isSnakeNotEating(snake2);
                 isSnakeEatingRed(snake2);
@@ -163,7 +148,6 @@ public class ServerGrid implements Runnable {
                 }
             }
         }
-
         timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 350);
     }
 
@@ -187,9 +171,7 @@ public class ServerGrid implements Runnable {
                 iterator.remove();
                 snake1.setEatingAppleFalse();
                 snake2.setEatingAppleFalse();
-
             }
-
         }
     }
 
@@ -226,6 +208,7 @@ public class ServerGrid implements Runnable {
     private void getWall() {
 
         for (int i = ServerPosition.MIN_ROW; i <= ServerPosition.MAX_ROW; i++) {
+
             wallList.add(new ServerPosition(wallCol1, i));
             wallList.add(new ServerPosition(wallCol2, i));
         }
@@ -244,7 +227,6 @@ public class ServerGrid implements Runnable {
 
             applesList.add(apple);
             server.broadcast(applesList.getLast().toString());
-
         }
     }
 
@@ -261,11 +243,10 @@ public class ServerGrid implements Runnable {
                 return true;
             }
         }
-
         return snake1.hasPosition(position) || snake2.hasPosition(position);
     }
 
-    public void setOver(Snake snake) {
+    private void setOver(Snake snake) {
 
         over = true;
         server.broadcast("over-" + snake.getName());

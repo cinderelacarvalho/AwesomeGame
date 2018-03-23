@@ -19,7 +19,6 @@ public class ServerHelper implements Runnable {
                 clientSocket.getInputStream()));
     }
 
-
     @Override
     public void run() {
 
@@ -35,9 +34,7 @@ public class ServerHelper implements Runnable {
                 e.printStackTrace();
             }
         }
-
     }
-
 
     public void sendMsg(String msg) {
 
@@ -49,5 +46,4 @@ public class ServerHelper implements Runnable {
             e.printStackTrace();
         }
     }
-
 }

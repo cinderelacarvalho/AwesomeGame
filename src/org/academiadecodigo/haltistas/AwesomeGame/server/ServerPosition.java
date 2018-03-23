@@ -32,18 +32,16 @@ public class ServerPosition {
         column++;
     }
 
-
     @Override
     public boolean equals(Object o) {
 
         if (o instanceof ServerPosition) {
+
             ServerPosition p = (ServerPosition) o;
             return p.column == this.column && p.row == this.row;
-
         }
         return false;
     }
-
 
     public int getColumn() {
         return column;

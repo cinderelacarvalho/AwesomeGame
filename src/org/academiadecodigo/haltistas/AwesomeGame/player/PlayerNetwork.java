@@ -45,8 +45,6 @@ public class PlayerNetwork implements Runnable {
                 e.printStackTrace();
             }
         }
-
     }
-
 }
 

@@ -33,10 +33,6 @@ public class Server {
 
     public void start() {
 
-        System.out.println("never here");
-        //  ExecutorService cachedPool = Executors.newCachedThreadPool();  // Or other type of thread
-
-
         while (true) {
 
             try {
@@ -73,9 +69,7 @@ public class Server {
 
             for (ServerHelper h : serverHelpers) {
 
-                //System.out.println("\n\n\nMessage to Send: " + msg);
                 h.sendMsg(msg);
-
             }
         }
     }

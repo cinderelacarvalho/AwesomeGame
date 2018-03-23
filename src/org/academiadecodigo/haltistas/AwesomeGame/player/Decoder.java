@@ -12,13 +12,12 @@ public class Decoder {
 
 
     public void decoding(String msg) {
-        int snake = 0;
-        int row = 0;
-        int col = 0;
+        int snake;
+        int row;
+        int col;
 
         String[] words = msg.split("-");
 
-        System.out.println(msg);
 
         switch (words[0]) {
 

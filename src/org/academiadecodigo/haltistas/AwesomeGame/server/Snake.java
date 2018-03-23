@@ -7,8 +7,6 @@ import java.util.LinkedList;
 
 public class Snake {
 
-    //TODO um hash map para a lista de macas.. as posicoes sao a key
-
     public LinkedList<ServerPosition> positionList;
     private String name;
     private volatile boolean over;
@@ -114,7 +112,6 @@ public class Snake {
                 break;
 
         }
-        System.out.println("MSG in move: " + msg);
         return msg;
     }
 
@@ -221,10 +218,10 @@ public class Snake {
 
     @Override
     public String toString() {
-        return "Snake{" + positionList.peek() + "}";
+        return "PlayerSnake{" + positionList.peek() + "}";
     }
 
     public boolean hasPosition(ServerPosition position) {
-        return positionList.contains(position); //TODO may have to iterate over list
+        return positionList.contains(position);
     }
 }

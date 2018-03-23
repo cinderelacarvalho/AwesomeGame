@@ -53,7 +53,7 @@ public class PlayerPosition {
             return;
         }
 
-        apple = new Picture(rectangle.getX(), rectangle.getY(), "resources/maça_verde.png");
+        apple = new Picture(rectangle.getX(), rectangle.getY(), "resources/maca-verde.png");
         apple.draw();
 
     }
@@ -64,7 +64,7 @@ public class PlayerPosition {
             return;
         }
 
-        apple = new Picture(rectangle.getX(), rectangle.getY(), "resources/maça.png");
+        apple = new Picture(rectangle.getX(), rectangle.getY(), "resources/maca.png");
         apple.draw();
     }
 

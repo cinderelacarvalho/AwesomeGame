@@ -47,7 +47,6 @@ public class ServerGrid implements Runnable {
         init();
     }
 
-    //Método que envia a mensagem de start para cada um dos players.
     public void init() {
 
 
@@ -98,7 +97,6 @@ public class ServerGrid implements Runnable {
     public void receiveMsg(String msg) {
 
         if (over) {
-            System.out.println("OVER");
             server.broadcast("restart");
             prepare();
             return;
@@ -124,16 +122,14 @@ public class ServerGrid implements Runnable {
 
                 wallClockCounter++;
 
-                if (wallClockCounter == 80) {
+                if (wallClockCounter == 100) {
 
                     server.broadcast("deletewall");
                     snake1.setMaxCol(ServerPosition.MAX_COLUMN);
                     snake2.setMinCol(ServerPosition.MIN_COLUMN);
                 }
 
-                System.out.println("MOVING");
 
-                System.out.println(applesList);
                 // verifica se está a comer maçãs e qual
                 checkEatingApple(applesList);
 
@@ -168,18 +164,15 @@ public class ServerGrid implements Runnable {
             }
         }
 
-        System.out.println("new cycle");
-        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 400);
+        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 350);
     }
 
     private void checkEatingApple(LinkedList<Apple> applesList) {
 
         Iterator<Apple> iterator = applesList.iterator();
 
-        System.out.println(snake1);
         while (iterator.hasNext()) {
             Apple apple = iterator.next();
-            System.out.println(apple);
 
             snake1.isEatingApple(apple);
             snake2.isEatingApple(apple);
@@ -282,7 +275,6 @@ public class ServerGrid implements Runnable {
 
     }
 
-    //TODO apagar???????????
     @Override
     public String toString() {
         return "ServerGrid{" +

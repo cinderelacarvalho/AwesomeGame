@@ -15,11 +15,11 @@ public class PlayerGrid {
     private final int PADDING = 10;
     private final int ROWS = 60;
     private final int COLS = 100;
-    private final int wallPos = 500;
+    private final int WALL_POS = 500;
 
     private Sound sound;
     private PlayerPosition[][] positions;
-    private ArrayList<Snake> snakeList;
+    private ArrayList<PlayerSnake> playerSnakeList;
 
     private Picture pictureRestart;
     private Picture canvas;
@@ -27,9 +27,9 @@ public class PlayerGrid {
 
 
     public void init() {
-        canvas = new Picture(0, 0, "resources/sand.jpg");
+        canvas = new Picture(PADDING, PADDING, "resources/sand.jpg");
         canvas.draw();
-        wall = new Picture(wallPos, PADDING, "resources/wall.jpg");
+        wall = new Picture(WALL_POS, PADDING, "resources/wall.jpg");
         sound = new Sound("/resources/dj-snake.wav");
 
         new Rectangle(PADDING, PADDING, COLS * CELL_SIZE, ROWS * CELL_SIZE).draw();
@@ -45,13 +45,13 @@ public class PlayerGrid {
                 positions[col][row] = new PlayerPosition(col, row, CELL_SIZE, PADDING);
             }
         }
-        snakeList = new ArrayList<>();
-        Snake snake1 = new Snake(this, positions[initialColSnake1][initialRowSnakes], positions[initialColSnake1][initialRowSnakes + 1],
+        playerSnakeList = new ArrayList<>();
+        PlayerSnake playerSnake1 = new PlayerSnake(this, positions[initialColSnake1][initialRowSnakes], positions[initialColSnake1][initialRowSnakes + 1],
                 positions[initialColSnake1][initialRowSnakes + 2], Color.BLUE);
-        snakeList.add(snake1);
-        Snake snake2 = new Snake(this, positions[initialColSnake2][initialRowSnakes], positions[initialColSnake2][initialRowSnakes + 1],
-                positions[initialColSnake2][initialRowSnakes + 2], Color.PINK);
-        snakeList.add(snake2);
+        playerSnakeList.add(playerSnake1);
+        PlayerSnake playerSnake2 = new PlayerSnake(this, positions[initialColSnake2][initialRowSnakes], positions[initialColSnake2][initialRowSnakes + 1],
+                positions[initialColSnake2][initialRowSnakes + 2], Color.GREEN);
+        playerSnakeList.add(playerSnake2);
     }
 
     public void start() {
@@ -68,25 +68,26 @@ public class PlayerGrid {
 
         switch (dir) {
             case "r":
-                snakeList.get(snake).moveRight();
+                playerSnakeList.get(snake).moveRight();
                 break;
             case "l":
-                snakeList.get(snake).moveLeft();
+                playerSnakeList.get(snake).moveLeft();
                 break;
             case "u":
-                snakeList.get(snake).moveUp();
+                playerSnakeList.get(snake).moveUp();
                 break;
             case "d":
-                snakeList.get(snake).moveDown();
+                playerSnakeList.get(snake).moveDown();
                 break;
             default:
                 System.out.println("shit");
+                break;
         }
 
     }
 
     public void deleteSnake(int snake) {
-        snakeList.get(snake).removePos();
+        playerSnakeList.get(snake).removePos();
     }
 
     public void greenApple(int row, int col) {
@@ -94,7 +95,6 @@ public class PlayerGrid {
     }
 
     public void deleteApple(int row, int col) {
-        System.out.println(positions[col][row]);
         positions[col][row].deleteAp();
     }
 
@@ -110,13 +110,13 @@ public class PlayerGrid {
 
     public void gameOver(String player) {
 
-        pictureRestart = new Picture(0, 0, "resources/restart.png");
+        pictureRestart = new Picture(PADDING, PADDING, "resources/restart.jpg");
 
         try {
 
             switch (player) {
                 case "0":
-                    Picture picturePlayer2 = new Picture(PADDING, PADDING, "resources/player_2_wins.jpg");
+                    Picture picturePlayer2 = new Picture(PADDING, PADDING, "resources/player2winner.png");
                     picturePlayer2.draw();
                     canvas.delete();
                     wall.delete();
@@ -128,7 +128,7 @@ public class PlayerGrid {
 
                     break;
                 case "1":
-                    Picture picturePlayer1 = new Picture(PADDING, PADDING, "resources/player_1_wins.jpg");
+                    Picture picturePlayer1 = new Picture(PADDING, PADDING, "resources/player1winner.png");
                     picturePlayer1.draw();
                     canvas.delete();
 
@@ -159,18 +159,17 @@ public class PlayerGrid {
         }
 
         positions = null;
-        snakeList.clear();
+        playerSnakeList.clear();
 
         pictureRestart.delete();
         init();
     }
 
-    //TODO apagar??????????????
     @Override
     public String toString() {
         return "PlayerGrid{" +
                 "positions=" + Arrays.toString(positions) +
-                ", snakeList=" + snakeList +
+                ", playerSnakeList=" + playerSnakeList +
                 '}';
     }
 }

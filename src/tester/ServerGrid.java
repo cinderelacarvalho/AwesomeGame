@@ -17,7 +17,6 @@ public class ServerGrid {
         Thread.sleep(1000);
         String string1 = snake1.move(Case.RIGHT);
         String string2 = snake2.move(Case.LEFT);
-        System.out.println(string1 + " " + string2);
 
 
     }

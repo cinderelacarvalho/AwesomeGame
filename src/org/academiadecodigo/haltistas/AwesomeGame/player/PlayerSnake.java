@@ -4,7 +4,7 @@ import org.academiadecodigo.simplegraphics.graphics.Color;
 
 import java.util.LinkedList;
 
-public class Snake {
+public class PlayerSnake {
 
     private PlayerPosition position;
     private LinkedList<PlayerPosition> snakePosition;
@@ -12,8 +12,8 @@ public class Snake {
     private Color color;
 
 
-    public Snake(PlayerGrid grid, PlayerPosition position1, PlayerPosition position2,
-                 PlayerPosition position3, Color color) {
+    public PlayerSnake(PlayerGrid grid, PlayerPosition position1, PlayerPosition position2,
+                PlayerPosition position3, Color color) {
         this.grid = grid;
         this.color = color;
         snakePosition = new LinkedList<>();
@@ -58,9 +58,8 @@ public class Snake {
     }
 
 
-    public void move(PlayerPosition newPos) {
+    private void move(PlayerPosition newPos) {
 
-        System.out.println(snakePosition.size());
         snakePosition.addFirst(newPos);
         newPos.paintPos(color);
 
@@ -72,6 +71,5 @@ public class Snake {
         snakePosition.remove(snakePosition.size() - 1);
 
     }
-
 }
 

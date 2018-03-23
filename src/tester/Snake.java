@@ -50,8 +50,6 @@ public class Snake {
     }
 
 
-    // TODO se comer maçã não entra neste método
-
     public String move(Case caseType) {
 
         ServerPosition position;
@@ -102,12 +100,6 @@ public class Snake {
 
     }
 
-    // TODO se comer maça vermelha entra neste método
-    public String eatRedApple(Case caseType) {
-        return null;
-
-    }
-
 
     // cenas do lado do cliente
     public void drawRectangle(ServerPosition position) {
@@ -117,6 +109,8 @@ public class Snake {
         rectangle.fill();
 
     }
+
+
 
     // cenas do lado do cliente
     public void drawNew(ServerPosition position) {

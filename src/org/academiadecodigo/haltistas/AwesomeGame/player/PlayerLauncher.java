@@ -8,7 +8,16 @@ public class PlayerLauncher {
 
         PlayerNetwork playerNetwork = null;
         try {
-            playerNetwork = new PlayerNetwork("127.0.0.1", 8765);
+
+            if (args.length != 2) {
+                System.out.println("Usage: java -jar ServerLauncher <Hostname> <PortNumber>");
+                return;
+            }
+            String hostname=args[0];
+            int portNumber=Integer.parseInt(args[1]);
+
+
+            playerNetwork = new PlayerNetwork(hostname, portNumber);
             playerNetwork.init();
 
             Thread thread = new Thread(playerNetwork);

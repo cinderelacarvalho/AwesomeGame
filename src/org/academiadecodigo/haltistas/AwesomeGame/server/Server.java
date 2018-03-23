@@ -73,7 +73,7 @@ public class Server {
 
             for (ServerHelper h : serverHelpers) {
 
-                System.out.println("\n\n\nMessage to Send: " + msg);
+                //System.out.println("\n\n\nMessage to Send: " + msg);
                 h.sendMsg(msg);
 
             }

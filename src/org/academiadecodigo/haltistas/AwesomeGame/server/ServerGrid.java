@@ -67,6 +67,7 @@ public class ServerGrid implements Runnable {
 
     private void prepare() {
 
+        over = false;
         snakeList = new ArrayList<>();
 
         snake1 = new Snake("0", new ServerPosition(initialColSnake1, initialRowSnakes),
@@ -97,6 +98,7 @@ public class ServerGrid implements Runnable {
     public void receiveMsg(String msg) {
 
         if (over) {
+            System.out.println("OVER");
             server.broadcast("restart");
             prepare();
             return;
@@ -122,12 +124,14 @@ public class ServerGrid implements Runnable {
 
                 wallClockCounter++;
 
-                if (wallClockCounter == 60) {
+                if (wallClockCounter == 80) {
 
                     server.broadcast("deletewall");
                     snake1.setMaxCol(ServerPosition.MAX_COLUMN);
                     snake2.setMinCol(ServerPosition.MIN_COLUMN);
                 }
+
+                System.out.println("MOVING");
 
                 System.out.println(applesList);
                 // verifica se está a comer maçãs e qual
@@ -159,14 +163,13 @@ public class ServerGrid implements Runnable {
                 }
 
                 if (over) {
-                    timer.cancel();
+                    cancel();
                 }
             }
         }
 
-        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 500);
-
-
+        System.out.println("new cycle");
+        timer.scheduleAtFixedRate(new MyVerySpecialTask(), 0, 400);
     }
 
     private void checkEatingApple(LinkedList<Apple> applesList) {
